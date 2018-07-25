@@ -5,9 +5,15 @@ export default {
   getBooks: function() {
     return axios.get("/api/books");
   },
+  getDash: function() {
+    return axios.get("/api/dashboard");
+  },
   // Gets the book with the given id
   getBook: function(id) {
     return axios.get("/api/books/" + id);
+  },
+  getDash: function(id) {
+    return axios.get("/api/dashboard/" + id);
   },
   // Deletes the book with the given id
   deleteBook: function(id) {

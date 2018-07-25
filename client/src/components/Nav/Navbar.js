@@ -40,6 +40,9 @@ export class Example extends React.Component {
               <NavItem>
                 <NavLink href="/research">Research</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink href="/dashboard">Dashboard</NavLink>
+              </NavItem>
               {/* <NavItem>
                 <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
               </NavItem> */}
