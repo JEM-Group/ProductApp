@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
-import {BtnGrp, BtnLrg}  from "../../components/Buttons";
+import { BtnLrg}  from "../../components/Buttons";
 
 const imgContStyle = {
   height: '75%', 
@@ -21,8 +21,8 @@ const imgContStyle = {
 class Dash extends Component {
   state = {
     dash: [],
-    Make: "",
-    Model: "",
+    make: "",
+    model: "",
     synopsis: ""
   };
 
@@ -38,11 +38,11 @@ class Dash extends Component {
       .catch(err => console.log(err));
   };
 
-  // deleteBook = id => {
-  //   API.deleteBook(id)
-  //     .then(res => this.loadBooks())
-  //     .catch(err => console.log(err));
-  // };
+  deleteDash = id => {
+    API.deleteDash(id)
+      .then(res => this.loadDash())
+      .catch(err => console.log(err));
+  };
 
   // handleInputChange = event => {
   //   const { name, value } = event.target;
@@ -114,12 +114,12 @@ class Dash extends Component {
               <List>
                 {this.state.dash.map(dash => (
                   <ListItem key={dash._id}>
-                    <Link to={"/dashboard/"}>
+                    <Link to={"/dashboard/"+ dash._id}>
                       <strong>
-                        {dash.Make} by {dash.Model}
+                        {dash.make} by {dash.model}
                       </strong>
                     </Link>
-                    {/* <DeleteBtn onClick={() => this.deleteBook(book._id)} /> */}
+                    <DeleteBtn onClick={() => this.deleteBook(dash._id)} />
                   </ListItem>
                 ))}
               </List>

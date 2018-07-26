@@ -8,21 +8,23 @@ export default {
   getDash: function() {
     return axios.get("/api/dashboard");
   },
+  // getDash: function(id) {
+  //   return axios.get("/api/dashboard/" + id);
+  // },
+
+  
   // Gets the book with the given id
   // getBook: function(id) {
   //   return axios.get("/api/books/" + id);
   // },
   
-  getDash: function(id) {
-    return axios.get("/api/dashboard/" + id);
-  },
 
   // Deletes the book with the given id
-  deleteBook: function(id) {
-    return axios.delete("/api/books/" + id);
+  deleteDash: function(id) {
+    return axios.delete("/api/dashboard/" + id);
   },
-  // Saves a book to the database
-  saveBook: function(bookData) {
-    return axios.post("/api/books", bookData);
+  // Saves a Dash to the database
+  saveDash: function(bookData) {
+    return axios.post("/api/dashboard", bookData);
   }
 };
