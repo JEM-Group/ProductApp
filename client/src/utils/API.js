@@ -9,12 +9,14 @@ export default {
     return axios.get("/api/dashboard");
   },
   // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
-  },
+  // getBook: function(id) {
+  //   return axios.get("/api/books/" + id);
+  // },
+  
   getDash: function(id) {
     return axios.get("/api/dashboard/" + id);
   },
+
   // Deletes the book with the given id
   deleteBook: function(id) {
     return axios.delete("/api/books/" + id);

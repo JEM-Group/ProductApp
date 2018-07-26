@@ -8,6 +8,16 @@ import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import {BtnGrp, BtnLrg}  from "../../components/Buttons";
 
+const imgContStyle = {
+  height: '75%', 
+  width: '75%', 
+  textAlign: 'center',
+  overflow: 'hidden',
+  position: 'relative',
+  bottom: '120px',
+  left: '30px'
+}
+
 class Dash extends Component {
   state = {
     dash: [],
@@ -59,6 +69,8 @@ class Dash extends Component {
     window.confirm('Button Pressed')
   };
 
+
+
   render() {
     return (
       <Container fluid>
@@ -80,8 +92,24 @@ class Dash extends Component {
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
-              <h1>Dashboard placeholder</h1>
+              {/* <h1>Dashboard placeholder</h1> */}
+              <div><img src={'http://www.goodcarbadcar.net/wp-content/uploads/2011/01/20142BChevrolet2BSilverado.png'} 
+              style={imgContStyle} alt="boohoo" className="img-responsive"/><span>Hello {this.props.name}</span></div>
             </Jumbotron>
+          </Col>
+        </Row>
+        <Row>
+          <Col size="md-6">
+            <form>
+              <Input
+                value={this.state.title}
+                onChange={this.handleInputChange}
+                name="title"
+                placeholder="Title (required)"
+              />
+            </form>
+          </Col>
+          <Col size="md-6 sm-12">
             {this.state.dash.length ? (
               <List>
                 {this.state.dash.map(dash => (

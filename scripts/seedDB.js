@@ -13,22 +13,22 @@ mongoose.connect(
 
 const dashSeed = [
   {
-    Make: "Ford",
-    Model: "F150",
+    make: "Ford",
+    model: "F150",
     synopsis:
       "This is the first vehicle in the DB.",
     date: new Date(Date.now())
   },
   {
-    Make: "Chevy",
-    Model: "Silverado",
+    make: "Chevy",
+    model: "Silverado",
     synopsis:
       "This is the second vehicle in the DB.",
     date: new Date(Date.now())
   },
   {
-    Make: "Dodge",
-    Model: "RAM",
+    make: "Dodge",
+    model: "RAM",
     synopsis:
       "This is the third vehicle in the DB.",
     date: new Date(Date.now())
