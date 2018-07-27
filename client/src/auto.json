@@ -1,0 +1,23 @@
+[
+    {
+      "id": 1,
+      "make": "Chevy",
+      "model": "Chevy",
+      "image": "https://cars.usnews.com/static/images/Auto/izmo/i51570139/2018_chevrolet_silverado_1500_angularfront.jpg",
+      "clicked": false
+    },
+    {
+      "id": 2,
+      "make": "Ford",
+      "model": "F-150",
+      "image": "https://blogmedia.dealerfire.com/wp-content/uploads/sites/275/2017/09/2018-Ford-F-150-Race-Red_o.jpg",
+      "clicked": false
+    },
+    {
+      "id": 3,
+      "make": "Dodge",
+      "model": "RAM",
+      "image": "./images/ganondorf.png",
+      "clicked": false
+    }
+  ]

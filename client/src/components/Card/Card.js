@@ -1,6 +1,44 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap';
+
+const imgContStyle = {
+  // height: '375px', 
+  // // width: '75%', 
+  // textAlign: 'center',
+  // overflow: 'hidden',
+  // position: 'relative',
+  // bottom: '120px',
+  // left: '25px'
+}
+
+const Example = (props) => {
+  return (
+    <div>
+      {/* <Card>
+        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+        <CardBody>
+          <CardTitle>Card Title</CardTitle>
+          <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>
+          <CardText>
+            <small className="text-muted">Last updated 3 mins ago</small>
+          </CardText>
+        </CardBody>
+      </Card> */}
+      <Card>
+        <CardBody>
+          <CardTitle>{props.title}</CardTitle>
+          <CardText>{props.cardText}</CardText>
+          <CardText>
+            <small className="text-muted"></small>
+          </CardText>
+        </CardBody>
+        <CardImg bottom width="100%" src={props.img} alt="Card image cap" style={imgContStyle} />
+      </Card>
+    </div>
+  );
+};
+  
+  export default Example;
 
 // const Card = () => (
 //   <div className="card">
@@ -21,20 +59,20 @@ import { Card, CardImg, CardText, CardBody,
 // export default Card;
 
 
-const Example = (props) => {
-  return (
-    <div>
-      <Card className="text-center">
-        <CardBody>
-          <CardTitle> {props.title} </CardTitle>
-          <CardSubtitle>{props.subtitle}</CardSubtitle>
-        </CardBody>
-      </Card>
-    </div>
-  );
-};
+// const Example = (props) => {
+//   return (
+//     <div>
+//       <Card className="text-center">
+//         <CardBody>
+//           <CardTitle> {props.title} </CardTitle>
+//           <CardSubtitle>{props.subtitle}</CardSubtitle>
+//         </CardBody>
+//       </Card>
+//     </div>
+//   );
+// };
 
-export default Example;
+// export default Example;
 
 // const Example = ({ children }) => {
 //   return (
