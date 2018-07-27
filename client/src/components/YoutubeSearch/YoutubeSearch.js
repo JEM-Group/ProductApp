@@ -8,7 +8,8 @@ var search = require('youtube-search');
 
 var opts = {
   maxResults: 5,
-  key: 'AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0 '
+  key: 'AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0',
+  testQ: 'new+car+reviews'
 };
 
 class YoutubeSearch extends Component {
@@ -20,7 +21,8 @@ class YoutubeSearch extends Component {
 			model: '',
 			year: ''
 		}
-	};
+	}
+
 	componentDidMount() {
 		// search('cars', opts, function(err, results) {
 		//   if(err) return console.log(err);
@@ -39,30 +41,40 @@ class YoutubeSearch extends Component {
 		// 	console.log("state", this.state.videos);
 		// })
 	}
-	 handleInputChange = event => {
+	handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
       [name]: value
     });
-  };
+  }
 
   handleFormSubmit = event => {
     event.preventDefault();
-    const max = opts.maxResults;
-    const API_key = opts.key;
-    const keyword = this.state.make + this.state.model + this.state.year
-    const queryResults =  axios.get('https://www.googleapis.com/youtube/v3/search?', {
+    const max = opts.maxResults
+    console.log(max)
+    const API_key = opts.key
+     console.log(API_key)
+    // NEED TO FIX const keyword = {this.state.make} + {this.state.model} + {this.state.year} 
+    const keyword = opts.testQ
+     console.log(keyword)
+    axios.get('https://www.googleapis.com/youtube/v3/search?', {
       params: {
         part: 'snippet',
         q: keyword,
-        type: "video",
+        type: 'video',
         key: API_key,
         order: 'date',
         maxResults: max
       }
+    }).then(function(response) {
+      if (response.status !== 201) {
+        
+        console.log(response.data)
+        return response.data;
+      }
+      
     })
-    console.log(this.state.videos)
-  };
+  }
 
 	render() {
 		return (
