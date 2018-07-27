@@ -1,57 +1,61 @@
 import React, { Component } from "react";
 import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
+import YoutubeSearch from "../../components/YoutubeSearch";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+var search = require('youtube-search');
+const opts = {
+  maxResults: 10,
+  key: 'AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0'
+};
 
-class Books extends Component {
+class Research extends Component {
   state = {
-    books: [],
-    title: "",
-    author: "",
-    synopsis: ""
-  };
-
+    video: [],
+    make: "",
+    model: "",
+    year: ""
+  }
+  
   componentDidMount() {
-    this.loadBooks();
+    console.log(opts);
+    // loadHotReviews(opts);
+  }
+  
+  loadHotReviews = (optsObj) => {
+    API.loadHotReviews(optsObj)
+      .then((response) => {
+        console.log(response);
+        // this.setState({video: response.results})
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
-  loadBooks = () => {
-    API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err));
-  };
+  // handleInputChange = event => {
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
-
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
+  // handleFormSubmit = event => {
+  //   event.preventDefault();
+  //   if (this.state.title && this.state.author) {
+  //     API.saveBook({
+  //       title: this.state.title,
+  //       author: this.state.author,
+  //       synopsis: this.state.synopsis
+  //     })
+  //       .then(res => this.loadResearch())
+  //       .catch(err => console.log(err));
+  //   }
+  // };
 
   render() {
     return (
@@ -59,60 +63,24 @@ class Books extends Component {
         <Row>
           <Col size="md-6">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+              <h1>Hot Reviews!</h1>
             </Jumbotron>
-            <form>
-              <Input
-                value={this.state.title}
-                onChange={this.handleInputChange}
-                name="title"
-                placeholder="Title (required)"
-              />
-              <Input
-                value={this.state.author}
-                onChange={this.handleInputChange}
-                name="author"
-                placeholder="Author (required)"
-              />
-              <TextArea
-                value={this.state.synopsis}
-                onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
-              />
-              <FormBtn
-                disabled={!(this.state.author && this.state.title)}
-                onClick={this.handleFormSubmit}
-              >
-                Submit Book
-              </FormBtn>
-            </form>
+            <YoutubeSearch />
           </Col>
-          <Col size="md-6 sm-12">
-            <Jumbotron>
-              <h1>Books On My List</h1>
-            </Jumbotron>
-            {this.state.books.length ? (
-              <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
-          </Col>
+          {/*<Col size="md-6 sm-12">
+            <div className="panel-list">
+              {this.state.video.map((item, i) =>{
+                return(
+                  <h1>{item.items}</h1>
+
+                )
+              })}
+            </div>
+          </Col>*/}
         </Row>
       </Container>
-    );
+    )
   }
 }
 
-export default Books;
+export default Research;
