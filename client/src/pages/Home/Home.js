@@ -60,12 +60,11 @@ class Books extends Component {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>JeM Labs</h1>
+              <h1>The JeM System</h1>
+              <h2>The Only Way to Do Research</h2>
+              <br/>
+              <p>by JeM Labs</p>
             </Jumbotron>
-            <Card
-              title="The JeM System"
-              subtitle="The Only way to research"
-            />
           </Col>
         </Row>
       </Container>
