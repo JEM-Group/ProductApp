@@ -7,35 +7,51 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+
+//require youtube-search package
 var search = require('youtube-search');
+
+//sample query params
 const opts = {
-  maxResults: 10,
+  maxResults: 6,
   key: 'AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0'
 };
 
+// React class constructor
 class Research extends Component {
   state = {
-    video: [],
+
+    results: [],
     make: "",
     model: "",
     year: ""
   }
   
   componentDidMount() {
-    console.log(opts);
+    // console.log(opts);
+    this.loadHotReviews(opts)
     // loadHotReviews(opts);
   }
-  
-  loadHotReviews = (optsObj) => {
+
+  loadHotReviews = optsObj => {
+  	console.log('loading hot reviews')
     API.loadHotReviews(optsObj)
-      .then((response) => {
-        console.log(response);
-        // this.setState({video: response.results})
+      .then(res => {
+        // console.log(res.data.items);
+        this.setState({ 
+        	  results: res.data.items 
+        }, function () {
+            console.log(this.state.results);
+        });
       })
       .catch(function (error) {
         console.log(error);
       });
   }
+
+  
+  
+
 
   // handleInputChange = event => {
   //   const { name, value } = event.target;
