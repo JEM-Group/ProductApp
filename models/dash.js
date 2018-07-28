@@ -5,6 +5,7 @@ const dashSchema = new Schema({
   make: { type: String, required: true },
   model: { type: String, required: true },
   synopsis: String,
+  // _id: String,
   date: { type: Date, default: Date.now }
 });
 
