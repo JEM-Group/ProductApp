@@ -27,7 +27,7 @@ const Example = (props) => {
       <Card className="center-block">
         <CardBody {...props} >
           <CardTitle>{props.title}</CardTitle>
-          <CardText>{props.cardText}</CardText>
+          <CardText>{props.cardtext}</CardText>
           <CardText>
             <small className="text-muted"></small>
           </CardText>

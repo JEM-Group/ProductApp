@@ -84,7 +84,7 @@ class Dash extends Component {
           <Col size="md-6">
             {this.state.auto.map(auto => (
               <BtnLrg 
-              key={auto.id}
+              key={auto._id}
               onClick={() => this.handleClick(auto.id)}
               >
                 {auto.make}
@@ -99,7 +99,7 @@ class Dash extends Component {
           <Col size="md-6">
             <Card
             title={"Dodge"}
-            cardText={"RAM"}
+            cardtext={"RAM"}
             img={"https://blogmedia.dealerfire.com/wp-content/uploads/sites/275/2017/09/2018-Ford-F-150-Race-Red_o.jpg"}
         
             />
@@ -115,7 +115,7 @@ class Dash extends Component {
           <Col size="md-6">
             <Card
             title={"Chevy"}
-            cardText={"Silverado"}
+            cardtext={"Silverado"}
             img={"https://cars.usnews.com/static/images/Auto/izmo/i51570139/2018_chevrolet_silverado_1500_angularfront.jpg"}
         
             />
@@ -150,7 +150,7 @@ class Dash extends Component {
 
             {this.state.auto.map(auto => (
             <Dropdown
-              key={auto.id}
+              key={auto._id}
               title={auto.make}
               />
             ))}

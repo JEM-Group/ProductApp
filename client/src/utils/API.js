@@ -3,14 +3,14 @@ import axios from "axios";
 
 export default {
   // Gets all books
-  getBooks: function() {
-    return axios.get("/api/books");
-  },
+  // getBooks: function() {
+  //   return axios.get("/api/books");
+  // },
   getDash: function() {
     return axios.get("/api/dashboard");
   },
 
-  getDash: function(id) {
+  getDashID: function(id) {
     return axios.get("/api/dashboard/" + id);
   },
 
