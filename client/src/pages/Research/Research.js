@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
 import YoutubeSearch from "../../components/YoutubeSearch";
+import ResultList from "../../components/ResultList"
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
@@ -82,7 +83,9 @@ class Research extends Component {
               <h1>Hot Reviews!</h1>
             </Jumbotron>
             <YoutubeSearch />
+            <ResultList results={this.state.results} />
           </Col>
+
           {/*<Col size="md-6 sm-12">
             <div className="panel-list">
               {this.state.video.map((item, i) =>{
