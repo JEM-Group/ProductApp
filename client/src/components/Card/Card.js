@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap';
 
 const imgContStyle = {
-  // height: '375px', 
-  // // width: '75%', 
+  height: '200px', 
+  width: '400px', 
   // textAlign: 'center',
   // overflow: 'hidden',
   // position: 'relative',
@@ -24,8 +24,8 @@ const Example = (props) => {
           </CardText>
         </CardBody>
       </Card> */}
-      <Card>
-        <CardBody>
+      <Card className="center-block">
+        <CardBody {...props} >
           <CardTitle>{props.title}</CardTitle>
           <CardText>{props.cardText}</CardText>
           <CardText>

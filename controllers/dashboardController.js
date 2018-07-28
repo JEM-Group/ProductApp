@@ -1,4 +1,8 @@
 const db = require("../models");
+const mongoose = require("mongoose");
+var ObjectId = require('mongodb').ObjectID;
+
+
 
 // Defining methods for the booksController
 module.exports = {
@@ -9,12 +13,37 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+
   findById: function(req, res) {
     db.Dash
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  
+
+
+  // findById: function(req, res) {
+  //   db.Dash
+  //     .findById(req.params.id, console.log(req.params.id))
+  //     .then(dbModel => res.json(dbModel))
+  //     .catch(err => res.status(422).json(err));
+  // },
+
+  // findById: function(req, res) {
+  //   db.Dash
+  //     .findById(mongoose.Types.ObjectId(req.params.id), console.log(req.params.id))
+  //     .then(dbModel => res.json(dbModel))
+  //     .catch(err => res.status(422).json(err));
+  // },
+
+  // findById: function(req, res) {
+  //   var myId = JSON.parse(req.body.id);
+  //   db.Dash
+  //     .findById({'_id': ObjectID(myId)}, console.log(myId))
+  //     .then(dbModel => res.json(dbModel))
+  //     .catch(err => res.status(422).json(err));
+  // },
 
   // findByIdAndUpdate: function(req, res) {
   //   db.Dash

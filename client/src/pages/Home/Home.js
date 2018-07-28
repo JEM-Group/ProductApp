@@ -59,12 +59,9 @@ class Books extends Component {
       <Container fluid>
         <Row>
           <Col size="md-12">
-            <Jumbotron>
-              <h1>The JeM System</h1>
-              <h2>The Only Way to Do Research</h2>
-              <br/>
-              <p>by JeM Labs</p>
-            </Jumbotron>
+            <Jumbotron
+              head={"The JeM System"}
+            />
           </Col>
         </Row>
       </Container>

@@ -1,23 +1,21 @@
 import React, { Component } from "react";
 // import DeleteBtn from "../../components/DeleteBtn";
 // import Jumbotron from "../../components/Jumbotron";
-// import API from "../../utils/API";
+import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn } from "../../components/Form";
+import { Input, TextArea, FormBtn, Dropdown } from "../../components/Form";
 import { BtnLrg}  from "../../components/Buttons";
-import Auto from "../../auto.json";
+// import Auto from "../../auto.json";
 import Card from "../../components/Card";
 
 
 class Dash extends Component {
   state = {
-    // dash,
+    auto: [],
     make: "",
     model: "",
-    // synopsis,
-    Auto,
     title: "",
 
   };
@@ -27,11 +25,11 @@ class Dash extends Component {
   }
 
   loadAuto = () => {
-    // API.getDash()
-    //   .then(res =>
-    //     this.setState({ dash: res.data, make: "", model: "", synopsis: "" })
-    //   )
-    //   .catch(err => console.log(err));
+    API.getDash()
+      .then(res =>
+        this.setState({ auto: res.data, make: "", model: "", synopsis: "" })
+      )
+      .catch(err => console.log(err));
   };
 
   // deleteBook = id => {
@@ -79,16 +77,17 @@ class Dash extends Component {
 
 
   render() {
+    console.log(this.state.auto)
     return (
       <Container fluid>
         <Row>
           <Col size="md-6">
-            {this.state.Auto.map(Auto => (
+            {this.state.auto.map(auto => (
               <BtnLrg 
-              key={Auto.id}
-              onClick={() => this.handleClick(Auto.id)}
+              key={auto.id}
+              onClick={() => this.handleClick(auto.id)}
               >
-                {Auto.make}
+                {auto.make}
               </BtnLrg>
             ))}
 
@@ -149,12 +148,12 @@ class Dash extends Component {
               {/* <h3>No Results to Display</h3> */}
             )}
 
-            {/* {this.state.Auto.map(Auto => (
-            <Card
-              key={Auto.id}
-              title={Auto.make}
+            {this.state.auto.map(auto => (
+            <Dropdown
+              key={auto.id}
+              title={auto.make}
               />
-            ))} */}
+            ))}
           </Col>
         </Row>
       </Container>
