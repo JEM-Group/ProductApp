@@ -1,19 +1,29 @@
 import React, { Component } from "react";
 import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
-import YoutubeSearch from "../../components/YoutubeSearch";
+// import YoutubeSearch from "../../components/YoutubeSearch";
 import ResultList from "../../components/ResultList"
 import API from "../../utils/API";
+import dateToRfc3339 from "../../utils/dateToRfc3339";
+
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 
 //require youtube-search package
-var search = require('youtube-search');
+const search = require('youtube-search');
+
+// Parsing date from one week ago
+const days = 7;
+const date = new Date();
+const xDaysAgo = date.setTime(date.getTime() - (days * 24 * 60 * 60 * 1000));
+const xDaysAgoDate = new Date(xDaysAgo);
+const xDaysAgoRfc = dateToRfc3339.dateToRfc3339(xDaysAgoDate);
 
 //sample query params
 const opts = {
+	publishedAfter: xDaysAgoRfc,
   maxResults: 6,
   key: 'AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0'
 };
@@ -27,7 +37,7 @@ class Research extends Component {
     model: "",
     year: ""
   }
-  
+
   componentDidMount() {
     // console.log(opts);
     this.loadHotReviews(opts)
@@ -39,8 +49,8 @@ class Research extends Component {
     API.loadHotReviews(optsObj)
       .then(res => {
         // console.log(res.data.items);
-        this.setState({ 
-        	  results: res.data.items 
+        this.setState({
+        	  results: res.data.items
         }, function () {
             console.log(this.state.results);
         });
@@ -49,10 +59,6 @@ class Research extends Component {
         console.log(error);
       });
   }
-
-  
-  
-
 
   // handleInputChange = event => {
   //   const { name, value } = event.target;
@@ -82,7 +88,7 @@ class Research extends Component {
             <Jumbotron>
               <h1>Hot Reviews!</h1>
             </Jumbotron>
-            <YoutubeSearch />
+            {/*<YoutubeSearch />*/}
             <ResultList results={this.state.results} />
           </Col>
 
