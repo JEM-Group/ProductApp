@@ -4,9 +4,9 @@ import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap
 const imgContStyle = {
   height: '200px', 
   width: '400px', 
-  // textAlign: 'center',
-  // overflow: 'hidden',
-  // position: 'relative',
+  textAlign: 'center',
+  overflow: 'hidden',
+  position: 'relative',
   // bottom: '120px',
   // left: '25px'
 }
@@ -32,7 +32,7 @@ const Example = (props) => {
             <small className="text-muted"></small>
           </CardText>
         </CardBody>
-        <CardImg bottom width="100%" src={props.img} alt="Card image cap" style={imgContStyle} />
+        <CardImg className="img-fluid" src={props.img} alt="Card image cap" style={imgContStyle} />
       </Card>
     </div>
   );

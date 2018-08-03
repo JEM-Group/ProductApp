@@ -42,7 +42,7 @@ export class Example extends React.Component {
                 <NavLink href="/dashboard">Dashboard</NavLink>
               </NavItem>
               {/* <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink href="/chart">Chart</NavLink>
               </NavItem> */}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
