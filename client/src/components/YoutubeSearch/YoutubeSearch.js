@@ -6,21 +6,16 @@ import { Input, TextArea, FormBtn } from "../../components/Form";
 import axios from "axios";
 var search = require('youtube-search');
 
-var opts = {
-  maxResults: 5,
-  key: 'AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0',
-  testQ: 'new+car+reviews'
-};
 
 class YoutubeSearch extends Component {
 	constructor() {
 		super();
-		this.state = {
-			videos: [],
-			make: '',
-			model: '',
-			year: ''
-		}
+		// this.state = {
+		// 	videos: [],
+		// 	make: '',
+		// 	model: '',
+		// 	year: ''
+		// }	
 	}
 
 	componentDidMount() {
