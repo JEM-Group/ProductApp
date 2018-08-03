@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import './Research.css';
 
 //require youtube-search package
 const search = require('youtube-search');
@@ -37,7 +38,7 @@ class Research extends Component {
     	results: [],
     	make: "",
     	model: "",
-    	year: ""
+    	year: "2018"
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -45,7 +46,7 @@ class Research extends Component {
   }
 
   componentDidMount() {
-    // this.loadHotReviews(opts)
+    this.loadHotReviews(opts)
   }
 
   handleChange(event) {
@@ -55,6 +56,7 @@ class Research extends Component {
   	this.setState({
   	  [name]: value
   	});
+
    // this.setState({value: event.target.value});
     console.log(event.target.value)
   }
@@ -64,6 +66,20 @@ class Research extends Component {
     console.log('make: ', this.state.make)
   	console.log('model: ', this.state.model)
 		console.log('year: ', this.state.year)
+		let query = this.buildQueryURL(this.state, opts)
+		API.loadReviews(query)
+		  .then(res => {
+		    // console.log(res.data.items);
+		    this.setState({
+		    	  results: res.data.items
+		    }, function () {
+		        console.log(this.state.results);
+		    });
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+		  });
+
   }
 
 
@@ -83,13 +99,23 @@ class Research extends Component {
       });
   }
 
-  handleInputChange = event => {
-  	console.log(this.value)
-    // const { name, value } = event.target;
-    // this.setState({
-    //   [name]: value
-    // });
+  buildQueryURL(state, opts) {
+    // queryURL is the url we'll use to query the API
+    var queryURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0&part=snippet";
+
+    // add the api key parameter (the one we received when we registered)
+    // queryURL += opts.key;
+
+    // grab text the user typed into the search input, add as parameter to url
+    let q = this.state.year + this.state.make + this.state.model
+    queryURL += "&q=" + q;
+
+    // Logging the URL so we have access to it for troubleshooting
+    console.log("---------------\nURL: " + queryURL + "\n---------------");
+
+    return queryURL;
   }
+
 
   // handleFormSubmit = event => {
   //   event.preventDefault();
@@ -113,7 +139,7 @@ class Research extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
+          <Col size="md-6" >
             <Jumbotron>
               <h1>Hot Reviews!</h1>
             </Jumbotron>
@@ -124,7 +150,7 @@ class Research extends Component {
                 value={this.state.make}
                 onChange={this.handleChange}
                 name="make"
-                placeholder="Make (required)"
+                placeholder="Make(required)"
               />
               <Input
                 value={this.state.model}

@@ -5,7 +5,7 @@ const ResultList = props => (
   <ul className="list-group">
     {props.results.map(result => (
       <li className="list-group-item" key={result.id.videoId}>
-        <h4>{result.snippet.title}</h4>
+        <p>{result.snippet.title}</p>
         <iframe width="420" height="315"
         src={"https://www.youtube.com/embed/" + result.id.videoId}>
         </iframe>

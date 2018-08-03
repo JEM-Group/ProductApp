@@ -46,5 +46,10 @@ export default {
         maxResults: max
       }
     })
+  },
+  // Load new car reviews
+  loadReviews: function(query) {
+
+    return axios.get(query)
   }
 };
