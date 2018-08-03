@@ -9,7 +9,7 @@ import { Input, TextArea, FormBtn, Dropdown } from "../../components/Form";
 import { BtnLrg}  from "../../components/Buttons";
 import Stuff from "../../auto.json";
 import Card from "../../components/Card";
-import BarChart from "../../components/Bar";
+import {BarChart, Donut} from "../../components/Graph";
 
 
 const data = {
@@ -28,14 +28,43 @@ const data = {
 };
 
 class Dash extends Component {
+
+  constructor(props) {
+    super(props);
+    
+    this.dataDoNut = {
+      labels: [
+        'Red',
+        'Black',
+        'Yellow'
+      ],
+      datasets: [{
+        data: this.state.myData,
+        backgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ],
+        hoverBackgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ]
+      }]
+    };
+
+  }
+
+
   state = {
     Stuff,
     make: "",
     model: "",
     title: "",
-    data: [65, 59, 80, 81, 56, 55, 40],
-
+    dataDoNut: "",
+    myData: [300, 50, 100],
   };
+
 
   // componentDidMount() {
   //   this.loadStuff();
@@ -99,16 +128,6 @@ class Dash extends Component {
       <Container fluid>
         <Row>
           <Col size="md-6">
-            {this.state.Stuff.map(Stuff => (
-              <BtnLrg 
-              key={Stuff._id}
-              onClick={() => this.handleClick(Stuff.id)}
-              >
-                {Stuff.make}
-              </BtnLrg>
-            ))}
-          </Col>
-          <Col size="md-6 sm-12">
           <BarChart
             data={data}
             width={100}
@@ -117,6 +136,11 @@ class Dash extends Component {
               maintainAspectRatio: true
             }}
           />
+          </Col>
+          <Col size="md-6 sm-12">
+          <div>
+            <Donut data={this.dataDoNut} />
+          </div>
           </Col>
         </Row>
         <Row>

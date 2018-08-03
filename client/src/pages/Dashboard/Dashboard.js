@@ -9,7 +9,22 @@ import { Input, TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } fr
 import { BtnLrg}  from "../../components/Buttons";
 // import options from "../../auto.json";
 import Card from "../../components/Card";
+import {BarChart, Donut} from "../../components/Graph";
 
+const data = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [
+    {
+      label: 'My First dataset',
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      borderWidth: 1,
+      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+      hoverBorderColor: 'rgba(255,99,132,1)',
+      data: [65, 59, 80, 81, 56, 55, 40]
+    }
+  ]
+};
 
 class Dash extends Component {
 
@@ -20,27 +35,61 @@ class Dash extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+
+    this.dataDoNut = {
+      labels: [
+        'Red',
+        'Black',
+        'Yellow'
+      ],
+      datasets: [{
+        data: this.state.myData,
+        backgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ],
+        hoverBackgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ]
+      }]
+    };
   }
 
   state = {
-    auto: [],
-    make: "",
+    auto1: [],
+    auto2: [],
+    make1: "",
+    make2: "",
     model: "",
-    title: "start",
+    model2: "",
+    title1: "start",
+    title2: "start",
     car1: "",
     car2: "",
+    dataDoNut: {},
+    myData: [300, 50, 100],
 
   };
 
   componentDidMount() {
-    this.loadAuto();
-    // this.loadAuto2();
+    this.loadAuto1();
+    this.loadAuto2();
   }
 
-  loadAuto = () => {
+  loadAuto1 = () => {
     API.getDash()
       .then(res =>
-        this.setState({ auto: res.data, make: "", model: "", synopsis: "" })
+        this.setState({ auto1: res.data, make: "", model: "", synopsis: "" })
+      )
+      .catch(err => console.log(err));
+  };
+  loadAuto2 = () => {
+    API.getDash()
+      .then(res =>
+        this.setState({ auto2: res.data, make: "", model: "", synopsis: "" })
       )
       .catch(err => console.log(err));
   };
@@ -69,10 +118,14 @@ class Dash extends Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
+    console.log("Change_-_-_-_-_-_")
+    console.log(target)
+    console.log("------")
     console.log(target.value)
     console.log(target.name)
+    console.log("-----------------")
   }
 
   handleBtnSubmit = e => {
@@ -103,15 +156,56 @@ class Dash extends Component {
     // alert('Your favorite flavor is: ' + this.state.first + " | " + this.state.second);
     // alert('Your favorite flavor is');
     event.preventDefault();
+    console.log("SUBMIT----------------")
+    console.log(this.state)
+    console.log("----------------")
     console.log(this.state.first)
     console.log(this.state.second)
-    console.log(this.state.auto.make)
+
+    const firstData = this.state.first
+    
+    console.log("test")
+    console.log(this.state.auto1)
+    console.log(this.state.auto2)
+    
+    const arrAuto1 = this.state.auto1;
+    console.log("test---find---")
+    console.log(arrAuto1)
+    console.log("test---findInArr---")
+
+    const findInObj = (inObj) =>{
+      return inObj._id === firstData;
+    }
+
+    console.log(arrAuto1.find(findInObj))
+
+    // const findInObj = (key, findData, firstData) => {
+    //   console.log("findInObj___1")
+    //   for (key in findData){
+    //     console.log("findInObj___2")
+    //     if (key == "_id"){
+    //       if (findData[key] == firstData){
+    //         var yessir = findData;
+    //         console.log(findData)
+    //         console.log(yessir)
+    //       }
+
+    //     }
+    //   }
+
+    // }
+    // findInObj();
+   
+
+
+
     if (this.state.first) {
-      this.setState({title: this.state.auto.make })
+      this.setState({title1: this.state.first })
+    }
+    if (this.state.second) {
+      this.setState({title2: this.state.second })
     }
   }
-
-
 
 
 
@@ -119,58 +213,69 @@ class Dash extends Component {
     // console.log(this.state.auto)
     return (
       <Container fluid>
+            <form>
         <Row>
           <Col size="md-4">
-            <form>
               <Dropdown onChange={this.handleInputChange} name="first" >
-                {this.state.auto.map(auto => (
-                <DropOption key={auto._id} 
-                value={auto.synopsis}
+                {this.state.auto1.map(auto1 => (
+                <DropOption key={auto1._id} 
+                value={auto1._id}
                 >
-                  {auto.make}
+                  {auto1.make}
                 </DropOption>
                 ))}
               </Dropdown>
-              <Dropdown onChange={this.handleInputChange} name="second"  >
-                {this.state.auto.map(auto => (
-                <DropOption key={auto._id} 
-                value={auto.make}
-                >
-                  {auto.make}
-                </DropOption>
-                ))}
-              </Dropdown>
+          </Col>
+          <Col size="md-4">
           <BtnLrg 
               onClick={this.handleSubmit}
               >
                 Compare
             </BtnLrg>
-            </form>
           </Col>
           <Col size="md-4">
-          </Col>
-          <Col size="md-4">
-            <div>
-            </div>
+              <Dropdown onChange={this.handleInputChange} name="second"  >
+                {this.state.auto2.map(auto2 => (
+                <DropOption key={auto2._id} 
+                value={auto2._id}
+                >
+                  {auto2.make}
+                </DropOption>
+                ))}
+              </Dropdown>
           </Col>
         </Row>
+            </form>
         <Row>
           <Col size="md-4">
             <Card
-            title={this.state.title}
+            title={this.state.title1}
             cardtext={"RAM"}
-            img={"https://blogmedia.dealerfire.com/wp-content/uploads/sites/275/2017/09/2018-Ford-F-150-Race-Red_o.jpg"}
+            img={"http://via.placeholder.com/350x150"}
         
             />
           </Col>
           <Col size="md-4">
-          <TextArea/>
+          <div>
+          <BarChart
+            data={data}
+            width={100}
+            height={50}
+            options={{
+              maintainAspectRatio: true
+            }}
+          />
+          </div>
+          <br/>
+          <div>
+            <Donut data={this.dataDoNut} />
+          </div>
           </Col>
           <Col size="md-4">
             <Card
-            title={"Chevy"}
+            title={this.state.title2}
             cardtext={"Silverado"}
-            img={"https://cars.usnews.com/static/images/Auto/izmo/i51570139/2018_chevrolet_silverado_1500_angularfront.jpg"}
+            img={"http://via.placeholder.com/350x150"}
         
             />
           </Col>

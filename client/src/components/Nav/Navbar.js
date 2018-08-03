@@ -41,9 +41,9 @@ export class Example extends React.Component {
               <NavItem>
                 <NavLink href="/dashboard">Dashboard</NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink href="/chart">Chart</NavLink>
-              </NavItem>
+              </NavItem> */}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Options
