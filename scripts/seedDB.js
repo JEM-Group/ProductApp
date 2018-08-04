@@ -14,6 +14,8 @@ mongoose.connect(
 const dashSeed = [
   {
     make: "Ford",
+    mpg: 10,
+    cost: 25000,
     model: "F150",
     synopsis:
       "This is the first vehicle in the DB.",
@@ -21,6 +23,8 @@ const dashSeed = [
   },
   {
     make: "Chevy",
+    mpg: 19,
+    cost: 35000,
     model: "Silverado",
     synopsis:
       "This is the second vehicle in the DB.",
@@ -28,13 +32,17 @@ const dashSeed = [
   },
   {
     make: "Dodge",
+    mpg: 35,
+    cost: 45000,
     model: "RAM",
     synopsis:
       "This is the third vehicle in the DB.",
     date: new Date(Date.now())
   },
   {
-    make: "ghetto",
+    make: "Hoopty",
+    mpg: 40,
+    cost: 48000,
     model: "shitbox",
     synopsis:
       "This is the fourth vehicle in the DB.",
