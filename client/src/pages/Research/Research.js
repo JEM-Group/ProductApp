@@ -1,19 +1,13 @@
 import React, { Component } from "react";
-import DeleteBtn from "../../components/DeleteBtn";
-import Jumbotron from "../../components/Jumbotron";
-// import YoutubeSearch from "../../components/YoutubeSearch";
+import { Jumbotron, Button, Col, Row, Container, Form, Input } from 'reactstrap';
 import ResultList from "../../components/ResultList"
 import API from "../../utils/API";
 import dateToRfc3339 from "../../utils/dateToRfc3339";
-
-import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn } from "../../components/Form";
-import './Research.css';
+import "./Research.css";
+// import { Link } from "react-router-dom";
 
 //require youtube-search package
-const search = require('youtube-search');
+// const search = require('youtube-search');
 
 // Parsing date from one week ago
 const days = 7;
@@ -22,11 +16,22 @@ const xDaysAgo = date.setTime(date.getTime() - (days * 24 * 60 * 60 * 1000));
 const xDaysAgoDate = new Date(xDaysAgo);
 const xDaysAgoRfc = dateToRfc3339.dateToRfc3339(xDaysAgoDate);
 
-//sample query params
-const opts = {
-	publishedAfter: xDaysAgoRfc,
-  maxResults: 6,
-  key: 'AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0'
+// Youtube API key
+const API_key = "AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0";
+
+// Youtube query params 
+let params = {
+  part: 'snippet',
+  q: 'car review | new car review',
+  type: 'video',
+  publishedAfter: xDaysAgoRfc,
+  key: API_key,
+  order: 'viewCount',
+  // from Youtube proprietary topic list
+  topicId: '/m/07yv9',
+  relevanceLanguage: 'EN',
+  videoEmbeddable: 'true',
+  maxResults: 6
 };
 
 // React class constructor
@@ -40,14 +45,42 @@ class Research extends Component {
     	model: "",
     	year: "2018"
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    this.loadHotReviews(opts)
+    let starterQuery = this.buildQueryURL(this.state, params)
+    API.loadReviews(starterQuery)
+      .then(res => {
+        // console.log(res.data.items);
+        this.setState({
+            results: res.data.items
+        }, function () {
+            console.log(this.state.results);
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // this.loadHotReviews(opts)
   }
+
+  // loadHotReviews = optsObj => {
+  //   console.log('loading hot reviews')
+  //   API.loadHotReviews(optsObj)
+  //     .then(res => {
+  //       // console.log(res.data.items);
+  //       this.setState({
+  //           results: res.data.items
+  //       }, function () {
+  //           console.log(this.state.results);
+  //       });
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
 
   handleChange(event) {
   	const target = event.target;
@@ -66,7 +99,7 @@ class Research extends Component {
     console.log('make: ', this.state.make)
   	console.log('model: ', this.state.model)
 		console.log('year: ', this.state.year)
-		let query = this.buildQueryURL(this.state, opts)
+		let query = this.buildQueryURL(params)
 		API.loadReviews(query)
 		  .then(res => {
 		    // console.log(res.data.items);
@@ -82,75 +115,58 @@ class Research extends Component {
 
   }
 
-
-  loadHotReviews = optsObj => {
-  	console.log('loading hot reviews')
-    API.loadHotReviews(optsObj)
-      .then(res => {
-        // console.log(res.data.items);
-        this.setState({
-        	  results: res.data.items
-        }, function () {
-            console.log(this.state.results);
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  buildQueryURL(state, opts) {
+  buildQueryURL(params) {
     // queryURL is the url we'll use to query the API
-    var queryURL = "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0&part=snippet";
+    let queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet";
 
     // add the api key parameter (the one we received when we registered)
-    // queryURL += opts.key;
+    queryURL += "&key=" + params.key;
 
-    // grab text the user typed into the search input, add as parameter to url
-    let q = this.state.year + this.state.make + this.state.model
+    // grab text the user typed into the search input, add as parameter to url (use initial params for componentDidMount)
+    let q = params.q;
+    // let q = this.state.year + this.state.make + this.state.model
     queryURL += "&q=" + q;
+
+    // add the type parameter
+    queryURL += "&type=" + params.type;
+
+    // add the publishedAfter parameter
+    queryURL += "&publishedAfter=" + params.publishedAfter;
+
+    // add the order parameter
+    queryURL += "&order=" + params.order;
+
+    // add the topicId parameter
+    queryURL += "&topicId=" + params.topicId;
+
+    // add the relevanceLanguage parameter
+    queryURL += "&relevanceLanguage=" + params.relevanceLanguage;
+
+    // add the videoEmbeddable parameter
+    queryURL += "&videoEmbeddable=" + params.videoEmbeddable;
+
+    // add the maxResults parameter
+    queryURL += "&maxResults=" + params.maxResults;
 
     // Logging the URL so we have access to it for troubleshooting
     console.log("---------------\nURL: " + queryURL + "\n---------------");
-
     return queryURL;
   }
-
-
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
-  //   axios.get('https://www.googleapis.com/youtube/v3/search?', {
-  //     params: {
-  //       part: 'snippet',
-  //       q: keyword,
-  //       type: 'video',
-  //       key: API_key,
-  //       order: 'date',
-  //       maxResults: max
-  //     }
-  //   }).then(function(response) {
-  //     if (response.status !== 201) {
-  //       console.log(response.data)
-  //       return response.data;
-  //     }
-  //   })
 
   render() {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6" >
+          <Col lg={{ size: 6, offset: 3 }} md={{size: 6, offset: 3}} sm={12} xs={12}>
             <Jumbotron>
-              <h1>Hot Reviews!</h1>
+              <h1>Search Reviews!</h1>
             </Jumbotron>
-            {/*<YoutubeSearch />*/}
-
-        		<form>
+        		<Form>
               <Input
                 value={this.state.make}
                 onChange={this.handleChange}
                 name="make"
-                placeholder="Make(required)"
+                placeholder="Make (required)"
               />
               <Input
                 value={this.state.model}
@@ -199,34 +215,14 @@ class Research extends Component {
         			    <option value="1981">1981</option>
         			    <option value="1980">1980</option>
         			    <option value="1979">1979</option>
-        			    <option value="1978">1978</option>
-        			    <option value="1977">1977</option>
-        			    <option value="1976">1976</option>
-        			    <option value="1975">1975</option>
-        			    <option value="1974">1974</option>
-        			    <option value="1973">1973</option>
-        			    <option value="1972">1972</option>
-        			    <option value="1971">1971</option>
-        			    <option value="1970">1970</option>
-        			    <option value="1969">1969</option>
-        			    <option value="1968">1968</option>
-        			    <option value="1967">1967</option>
-        			    <option value="1966">1966</option>
-        			    <option value="1965">1965</option>
-        			    <option value="1964">1964</option>
-        			    <option value="1963">1963</option>
-        			    <option value="1962">1962</option>
-        			    <option value="1961">1961</option>
-        			    <option value="1960">1960</option>
-        			    <option value="1959">1959</option>
         			</select>
-              <FormBtn
+              <Button
                 disabled={!(this.state.make || this.state.model || this.state.year)}
                 onClick={this.handleSubmit}
               >
-                Get Reviews!
-              </FormBtn>
-            </form>
+                Get reviews
+              </Button>
+            </Form>
 
             <ResultList results={this.state.results} />
           </Col>
