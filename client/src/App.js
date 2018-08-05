@@ -7,15 +7,14 @@ import Dashboard from "./pages/Dashboard";
 import Chart from "./pages/Chart";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
-import {Example} from "./components/Nav";
+import {MyNavbar} from "./components/MyNavbar";
 
 const App = () => (
   <Router>
     <div>
-      <Example />
+      <MyNavbar />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/books" component={Books} />
         <Route exact path="/research" component={Research} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/books/:id" component={Detail} />

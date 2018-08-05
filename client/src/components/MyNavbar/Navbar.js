@@ -13,7 +13,7 @@ import {
   DropdownItem } from 'reactstrap';
 import "./navbar.css"
 
-export class Example extends React.Component {
+export class MyNavbar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -31,7 +31,7 @@ export class Example extends React.Component {
     return (
       <div>
         <Navbar className="navbar navbar-dark bg-dark" expand="md">
-          <NavbarBrand href="/">JeM</NavbarBrand>
+          <NavbarBrand href="/">JEM</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto navbar navbar-dark bg-dark" navbar>
@@ -39,25 +39,25 @@ export class Example extends React.Component {
                 <NavLink href="/research">Research</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/dashboard">Dashboard</NavLink>
+                <NavLink href="/dashboard">My Dashboard</NavLink>
               </NavItem>
               {/* <NavItem>
                 <NavLink href="/chart">Chart</NavLink>
               </NavItem> */}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  Account
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    Option 1
+                    Login
                   </DropdownItem>
                   <DropdownItem>
-                    Option 2
+                    Preferences
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    Reset
+                    Logout
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
