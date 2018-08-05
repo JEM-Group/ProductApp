@@ -9,10 +9,13 @@ import { Input, TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } fr
 import { BtnLrg}  from "../../components/Buttons";
 // import options from "../../auto.json";
 import Card from "../../components/Card";
-import {BarChart, Donut} from "../../components/Graph";
+// import {BarChart, Donut} from "../../components/Graph";
+import {Donut} from "../../components/Graph";
+import {Bar} from 'react-chartjs-2';
 
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+
+const barChart1 = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
   datasets: [
     {
       label: 'My First dataset',
@@ -21,10 +24,11 @@ const data = {
       borderWidth: 1,
       hoverBackgroundColor: 'rgba(255,99,132,0.4)',
       hoverBorderColor: 'rgba(255,99,132,1)',
-      data: [65, 59, 80, 81, 56, 55, 40]
+      data: [65, 59, 80, 81, 56, 55]
     }
   ]
 };
+
 
 class Dash extends Component {
 
@@ -43,7 +47,7 @@ class Dash extends Component {
         'Yellow'
       ],
       datasets: [{
-        data: this.state.myData,
+        data: [5,5],
         backgroundColor: [
         '#FF6384',
         '#36A2EB',
@@ -70,9 +74,15 @@ class Dash extends Component {
     car1: "",
     car2: "",
     dataDoNut: {},
-    myData: [300, 50, 100],
+    // myData: [5,5],
+    chart1Data: barChart1,
+
 
   };
+
+  componentWillMount(){
+    // this.setState({chart1Data: barChart1});
+	};
 
   componentDidMount() {
     this.loadAuto1();
@@ -82,34 +92,17 @@ class Dash extends Component {
   loadAuto1 = () => {
     API.getDash()
       .then(res =>
-        this.setState({ auto1: res.data, make: "", model: "", synopsis: "" })
+        this.setState({ auto1: res.data, make: "", model: "", synopsis: "", mpg: "", cost: "" })
       )
       .catch(err => console.log(err));
   };
   loadAuto2 = () => {
     API.getDash()
       .then(res =>
-        this.setState({ auto2: res.data, make: "", model: "", synopsis: "" })
+        this.setState({ auto2: res.data, make: "", model: "", synopsis: "", mpg: "", cost: "" })
       )
       .catch(err => console.log(err));
   };
-  // loadAuto2 = () => {
-  //   API.getDash()
-  //     .then(res =>
-  //       this.setState({ auto2: res.data, make: "", model: "", synopsis: "" },),
-  //     )
-  //     .catch(err => console.log(err));
-  // };
-
-  // handleInputChange = event => {
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  //   console.log(event.target)
-  //   console.log(this.state.value)
-  // };
-
 
   handleInputChange(event) {
     const target = event.target;
@@ -172,39 +165,49 @@ class Dash extends Component {
     console.log("test---find---")
     console.log(arrAuto1)
     console.log("test---findInArr---")
-
+    
     const findInObj = (inObj) =>{
       return inObj._id === firstData;
     }
-
+    
+    console.log("test---find Object---")
     console.log(arrAuto1.find(findInObj))
+    const firstFoundObj = arrAuto1.find(findInObj);
+    console.log(firstFoundObj.cost)
+    console.log("__________________________")
 
-    // const findInObj = (key, findData, firstData) => {
-    //   console.log("findInObj___1")
-    //   for (key in findData){
-    //     console.log("findInObj___2")
-    //     if (key == "_id"){
-    //       if (findData[key] == firstData){
-    //         var yessir = findData;
-    //         console.log(findData)
-    //         console.log(yessir)
-    //       }
+    var oldDataSet = this.state.chart1Data.datasets[0];
+    console.log(oldDataSet)
+    var newData = [2,4,8,16,32,64];
+    var newDataSet = {
+      ...oldDataSet
+    };
+    
+    newDataSet.data = newData;
+    
+    var newState = {
+      ...barChart1,
+      datasets: [newDataSet]
+    };
+    
+    this.setState({chart1Data: newState})
+    console.log(newState)
 
-    //     }
-    //   }
-
+    // render()
+    // {
+    //   return (
+    //     <Bar data={this.data}/>
+    //   )
     // }
-    // findInObj();
-   
+    
 
 
-
-    if (this.state.first) {
-      this.setState({title1: this.state.first })
-    }
-    if (this.state.second) {
-      this.setState({title2: this.state.second })
-    }
+    // if (this.state.first) {
+    //   this.setState({title1: this.state.first })
+    // }
+    // if (this.state.second) {
+    //   this.setState({title2: this.state.second })
+    // }
   }
 
 
@@ -257,13 +260,14 @@ class Dash extends Component {
           </Col>
           <Col size="md-4">
           <div>
-          <BarChart
-            data={data}
+          <Bar
+            data={this.state.chart1Data}
             width={100}
             height={50}
             options={{
               maintainAspectRatio: true
             }}
+            redraw
           />
           </div>
           <br/>
