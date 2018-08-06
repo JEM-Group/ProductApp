@@ -38,19 +38,17 @@ class Home extends Component {
                 color="success"
                 size="large"
                 href="/research"
-                // target="_blank"
-	            >
-	              Search Reviews
-	            </Button>
-	            <Button
-	              tag="a"
-	              color="success"
-	              size="large"
-	              href="compare"
-	              // target="_blank"
-	            >
-	              Compare Cars
-	            </Button>
+	    >
+	      Search Reviews
+	    </Button>
+	    <Button
+	      tag="a"
+	      color="success"
+	      size="large"
+	      href="/dashboard"
+	    >
+	      Compare Cars
+	    </Button>
           </Col>
         </Row>
       </Container>
