@@ -1,5 +1,10 @@
-
-.row > * {
+.jumbotron{
+  padding: 3rem !important;
+}
+input {
+	margin-bottom: 1rem !important;
+}
+/*.row > * {
 	margin: 0 auto;
 }
 form {
@@ -13,11 +18,8 @@ form {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
-}
-/*.jumbotron{
-    float: none;
-    margin: 3rem auto;
-}
+}*/
+/*
 
 form input {
 	margin: 0 auto;

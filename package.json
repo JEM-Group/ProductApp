@@ -22,6 +22,10 @@
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
-    "mongoose": "^5.0.17"
+    "mongoose": "^5.0.17",
+    "node-mime": "^1.0.0",
+    "react-bootstrap-typeahead": "^3.2.0",
+    "react-chartjs-2": "^2.7.4",
+    "reactstrap": "^6.3.1"
   }
 }

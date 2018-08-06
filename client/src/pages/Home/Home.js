@@ -1,26 +1,21 @@
 import React, { Component } from "react";
-// import DeleteBtn from "../../components/DeleteBtn";
-import Jumbotron from "../../components/Jumbotron";
+import { Jumbotron, Button, Col, Row, Container } from 'reactstrap';
 import API from "../../utils/API";
+import "./Home.css";
 // import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../../components/Grid";
-// import { List, ListItem } from "../../components/List";
-// import { Input, TextArea, FormBtn } from "../../components/Form";
-import Card from "../../components/Card";
 
-class Books extends Component {
+class Home extends Component {
   state = {
-    books: [],
-    title: "",
-    author: "",
-    synopsis: ""
+    results: [],
+    username: "",
+    password: ""
   };
 
   componentDidMount() {
-    this.loadBooks();
+    this.welcomeScreen();
   }
 
-  loadBooks = () => {
+  welcomeScreen = () => {
     // API.getBooks()
     //   .then(res =>
     //     this.setState({ books: res.data, title: "", author: "", synopsis: "" })
@@ -28,40 +23,34 @@ class Books extends Component {
     //   .catch(err => console.log(err));
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
-
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
-
   render() {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-12">
-            <Jumbotron
-              head={"The JeM System"}
-            />
+          <Col lg={{ size: 6, offset: 3 }} md={{size: 6, offset: 3}} sm={12} xs={12}>
+            <Jumbotron>
+              <h1>JEM Finder</h1>
+              <p>The world's most advanced</p>
+              <p>automotive research app</p>
+            </Jumbotron>
+              <Button
+                tag="a"
+                color="success"
+                size="large"
+                href="/research"
+                // target="_blank"
+	            >
+	              Search Reviews
+	            </Button>
+	            <Button
+	              tag="a"
+	              color="success"
+	              size="large"
+	              href="compare"
+	              // target="_blank"
+	            >
+	              Compare Cars
+	            </Button>
           </Col>
         </Row>
       </Container>
@@ -69,4 +58,4 @@ class Books extends Component {
   }
 }
 
-export default Books;
+export default Home;

@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-// import DeleteBtn from "../../components/DeleteBtn";
-// import Jumbotron from "../../components/Jumbotron";
-import API from "../../utils/API";
-import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } from "../../components/Form";
-import { BtnLrg}  from "../../components/Buttons";
-// import options from "../../auto.json";
+import { Jumbotron, Button, Col, Row, Container, Form, Input } from 'reactstrap';
+import { Dropdown, DropOption } from "../../components/Form";
 import Card from "../../components/Card";
 import {BarChart, Donut} from "../../components/Graph";
+import API from "../../utils/API";
+import { Link } from "react-router-dom";
+import "./Dashboard.css";
 
 const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -27,15 +23,13 @@ const data = {
 };
 
 class Dash extends Component {
-
   constructor(props) {
     super(props);
-    
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
 
+    // Data props
     this.dataDoNut = {
       labels: [
         'Red',
@@ -70,8 +64,7 @@ class Dash extends Component {
     car1: "",
     car2: "",
     dataDoNut: {},
-    myData: [300, 50, 100],
-
+    myData: [300, 50, 100]
   };
 
   componentDidMount() {
@@ -109,7 +102,6 @@ class Dash extends Component {
   //   console.log(event.target)
   //   console.log(this.state.value)
   // };
-
 
   handleInputChange(event) {
     const target = event.target;
@@ -195,9 +187,6 @@ class Dash extends Component {
 
     // }
     // findInObj();
-   
-
-
 
     if (this.state.first) {
       this.setState({title1: this.state.first })
@@ -207,15 +196,13 @@ class Dash extends Component {
     }
   }
 
-
-
   render() {
     // console.log(this.state.auto)
     return (
       <Container fluid>
-            <form>
-        <Row>
-          <Col size="md-4">
+        <Form>
+          <Row>
+            <Col lg={4} md={4} sm={12} xs={12}>
               <Dropdown onChange={this.handleInputChange} name="first" >
                 {this.state.auto1.map(auto1 => (
                 <DropOption key={auto1._id} 
@@ -225,15 +212,15 @@ class Dash extends Component {
                 </DropOption>
                 ))}
               </Dropdown>
-          </Col>
-          <Col size="md-4">
-          <BtnLrg 
-              onClick={this.handleSubmit}
-              >
-                Compare
-            </BtnLrg>
-          </Col>
-          <Col size="md-4">
+            </Col>
+            <Col lg={4} md={4} sm={12} xs={12}>
+            <Button 
+                onClick={this.handleSubmit}
+                >
+                  Compare
+              </Button>
+            </Col>
+            <Col lg={4} md={4} sm={12} xs={12}>
               <Dropdown onChange={this.handleInputChange} name="second"  >
                 {this.state.auto2.map(auto2 => (
                 <DropOption key={auto2._id} 
@@ -243,19 +230,18 @@ class Dash extends Component {
                 </DropOption>
                 ))}
               </Dropdown>
-          </Col>
-        </Row>
-            </form>
+            </Col>
+          </Row>
+        </Form>
         <Row>
-          <Col size="md-4">
+          <Col lg={4} md={4} sm={12} xs={12}>
             <Card
             title={this.state.title1}
             cardtext={"RAM"}
             img={"http://via.placeholder.com/350x150"}
-        
             />
           </Col>
-          <Col size="md-4">
+          <Col lg={4} md={4} sm={12} xs={12}>
           <div>
           <BarChart
             data={data}
@@ -271,12 +257,11 @@ class Dash extends Component {
             <Donut data={this.dataDoNut} />
           </div>
           </Col>
-          <Col size="md-4">
+          <Col lg={4} md={4} sm={12} xs={12}>
             <Card
             title={this.state.title2}
             cardtext={"Silverado"}
             img={"http://via.placeholder.com/350x150"}
-        
             />
           </Col>
         </Row>
@@ -303,9 +288,9 @@ class Dash extends Component {
               </form>
           </div> */}
           </Col>
-          <br/>
-          <br/>
-          <br/>
+        <br/>
+        <br/>
+        <br/>
         </Row>
       </Container>
     );

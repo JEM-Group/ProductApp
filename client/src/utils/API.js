@@ -13,12 +13,10 @@ export default {
   getDashID: function(id) {
     return axios.get("/api/dashboard/" + id);
   },
-  
   // Gets the book with the given id
   // getBook: function(id) {
   //   return axios.get("/api/books/" + id);
   // },
-  
 
   //Deletes the book with the given id
   deleteBook: function(id) {
@@ -31,29 +29,28 @@ export default {
   },
 
   // Load new car reviews
-  loadHotReviews: function(optsObj) {
-    const date = optsObj.publishedAfter;
-    const max = optsObj.maxResults;
-    const API_key = optsObj.key;
+  // loadHotReviews: function(optsObj) {
+  //   const date = optsObj.publishedAfter;
+  //   const max = optsObj.maxResults;
+  //   const API_key = optsObj.key;
 
-    return axios.get('https://www.googleapis.com/youtube/v3/search?', {
-      params: {
-        part: 'snippet',
-        q: 'car review | new car review',
-        type: 'video',
-        publishedAfter: date,
-        key: API_key,
-        order: 'viewCount',
-        topicId: '/m/07yv9',
-        relevanceLanguage: 'EN',
-        videoEmbeddable: 'true',
-        maxResults: max
-      }
-    })
-  },
+  //   return axios.get('https://www.googleapis.com/youtube/v3/search?', {
+  //     params: {
+  //       part: 'snippet',
+  //       q: 'car review | new car review',
+  //       type: 'video',
+  //       publishedAfter: date,
+  //       key: API_key,
+  //       order: 'viewCount',
+  //       topicId: '/m/07yv9',
+  //       relevanceLanguage: 'EN',
+  //       videoEmbeddable: 'true',
+  //       maxResults: max
+  //     }
+  //   })
+  // },
   // Load new car reviews
   loadReviews: function(query) {
-
     return axios.get(query)
   }
 };
