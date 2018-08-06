@@ -19,7 +19,7 @@ const xDaysAgoRfc = dateToRfc3339.dateToRfc3339(xDaysAgoDate);
 // Youtube API key
 const API_key = "AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0";
 
-// Youtube query params 
+// Youtube query params
 let params = {
   part: 'snippet',
   q: 'car review | new car review',
@@ -27,7 +27,7 @@ let params = {
   publishedAfter: xDaysAgoRfc,
   key: API_key,
   order: 'viewCount',
-  // from Youtube proprietary topic list
+  // Youtube proprietary topic parameter
   topicId: '/m/07yv9',
   relevanceLanguage: 'EN',
   videoEmbeddable: 'true',
@@ -50,7 +50,7 @@ class Research extends Component {
   }
 
   componentDidMount() {
-    let starterQuery = this.buildQueryURL(this.state, params)
+    let starterQuery = this.buildQueryURL(params)
     API.loadReviews(starterQuery)
       .then(res => {
         // console.log(res.data.items);
@@ -120,6 +120,8 @@ class Research extends Component {
     let queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet";
 
     // add the api key parameter (the one we received when we registered)
+    console.log('params obj', params)
+    console.log('params.key', params.key)
     queryURL += "&key=" + params.key;
 
     // grab text the user typed into the search input, add as parameter to url (use initial params for componentDidMount)
@@ -157,7 +159,7 @@ class Research extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col lg={{ size: 6, offset: 3 }} md={{size: 6, offset: 3}} sm={12} xs={12}>
+          <Col lg={{ size: 8, offset: 2 }} md={{size: 8, offset: 2}} sm={12} xs={12}>
             <Jumbotron>
               <h1>Search Reviews!</h1>
             </Jumbotron>
