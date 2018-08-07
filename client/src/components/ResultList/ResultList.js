@@ -7,7 +7,7 @@ const ResultList = props => (
       <li className="list-group-item" key={result.id.videoId}>
         <p>{result.snippet.title}</p>
         <div className="embed-responsive embed-responsive-16by9">
-          <iframe className="embed-responsive-item" src={"https://www.youtube.com/embed/" + result.id.videoId} allowfullscreen></iframe>
+          <iframe className="embed-responsive-item" src={"https://www.youtube.com/embed/" + result.id.videoId} allowFullScreen></iframe>
         </div>
 
         {/*<iframe width="420" height="315"
