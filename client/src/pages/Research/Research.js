@@ -103,6 +103,8 @@ class Research extends Component {
     // Updating publishedAfter query param to match state
     let currentYear = (new Date()).getFullYear()
     console.log(currentYear)
+
+    // Setting publishedAfter date as one year prior to user inputted year to account for cars that get released prior to their 'model year'
     let publishedAfterDaysAgo = 365*(currentYear - year - 1)
     console.log(publishedAfterDaysAgo)
 		let publishedAfterRfcDate = parseRfc3339date(publishedAfterDaysAgo)
