@@ -103,7 +103,9 @@ class Research extends Component {
     // Updating publishedAfter query param to match state
     let currentYear = (new Date()).getFullYear()
     console.log(currentYear)
-    let publishedAfterDaysAgo = 365*(currentYear - year)
+
+    // Setting publishedAfter date as one year prior to user inputted year to account for cars that get released prior to their 'model year'
+    let publishedAfterDaysAgo = 365*(currentYear - year - 1)
     console.log(publishedAfterDaysAgo)
 		let publishedAfterRfcDate = parseRfc3339date(publishedAfterDaysAgo)
 		params.publishedAfter = publishedAfterRfcDate
@@ -169,7 +171,7 @@ class Research extends Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container className="research" fluid>
         <Row>
           <Col lg={{ size: 6, offset: 3 }} md={{size: 6, offset: 3}} sm={12} xs={12}>
             <Jumbotron>
