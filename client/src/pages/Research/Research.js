@@ -9,12 +9,14 @@ import "./Research.css";
 //require youtube-search package
 // const search = require('youtube-search');
 
-// Parsing date from one week ago
-const days = 7;
-const date = new Date();
-const xDaysAgo = date.setTime(date.getTime() - (days * 24 * 60 * 60 * 1000));
-const xDaysAgoDate = new Date(xDaysAgo);
-const xDaysAgoRfc = dateToRfc3339.dateToRfc3339(xDaysAgoDate);
+function parseRfc3339date(days) {
+	// const days = days;
+	const date = new Date();
+	const xDaysAgo = date.setTime(date.getTime() - (days * 24 * 60 * 60 * 1000));
+	const xDaysAgoDate = new Date(xDaysAgo);
+	const xDaysAgoRfc = dateToRfc3339.dateToRfc3339(xDaysAgoDate);
+	return xDaysAgoRfc;
+}
 
 // Youtube API key
 const API_key = "AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0";
@@ -22,17 +24,19 @@ const API_key = "AIzaSyDZ4lWg5nBC6TvLtD2Np3uMw2ymVVGzHy0";
 // Youtube query params
 let params = {
   part: 'snippet',
-  q: 'car review | new car review',
+  q: 'new car review|new automobile review -india',
   type: 'video',
-  publishedAfter: xDaysAgoRfc,
+  publishedAfter: '',
   key: API_key,
-  order: 'viewCount',
-  // Youtube proprietary topic parameter
+  order: 'relevance',
+  // order: 'rating',
+  regionCode: 'US',
+  relevanceLanguage: 'en',
   topicId: '/m/07yv9',
-  relevanceLanguage: 'EN',
   videoEmbeddable: 'true',
   maxResults: 6
 };
+
 
 // React class constructor
 class Research extends Component {
@@ -50,6 +54,10 @@ class Research extends Component {
   }
 
   componentDidMount() {
+
+    let publishedAfterRfcDate = parseRfc3339date(30)
+    params.publishedAfter = publishedAfterRfcDate
+
     let starterQuery = this.buildQueryURL(params)
     API.loadReviews(starterQuery)
       .then(res => {
@@ -63,24 +71,7 @@ class Research extends Component {
       .catch(function (error) {
         console.log(error);
       });
-    // this.loadHotReviews(opts)
   }
-
-  // loadHotReviews = optsObj => {
-  //   console.log('loading hot reviews')
-  //   API.loadHotReviews(optsObj)
-  //     .then(res => {
-  //       // console.log(res.data.items);
-  //       this.setState({
-  //           results: res.data.items
-  //       }, function () {
-  //           console.log(this.state.results);
-  //       });
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
 
   handleChange(event) {
   	const target = event.target;
@@ -96,9 +87,29 @@ class Research extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('make: ', this.state.make)
-  	console.log('model: ', this.state.model)
-		console.log('year: ', this.state.year)
+    let make = this.state.make
+  	let model = this.state.model
+		let year = this.state.year
+
+		// Updating q query param to match state
+
+		// let keywords = [(year + " " +  make + " " + model + ' car review'), (year + " " +  make + " " + model + ' automobile review')]
+		// let newKeyword = keywords.join(' | ');
+		let newKeyword = (year + ' ' +  make + ' ' + model + ' review')
+		console.log(newKeyword)
+		params.q = newKeyword
+		console.log(params.q)
+
+    // Updating publishedAfter query param to match state
+    let currentYear = (new Date()).getFullYear()
+    console.log(currentYear)
+    let publishedAfterDaysAgo = 365*(currentYear - year)
+    console.log(publishedAfterDaysAgo)
+		let publishedAfterRfcDate = parseRfc3339date(publishedAfterDaysAgo)
+		params.publishedAfter = publishedAfterRfcDate
+		console.log(params.publishedAfter)
+
+    // Make API call based on user input i.e. new state
 		let query = this.buildQueryURL(params)
 		API.loadReviews(query)
 		  .then(res => {
@@ -115,19 +126,19 @@ class Research extends Component {
 
   }
 
+
   buildQueryURL(params) {
     // queryURL is the url we'll use to query the API
     let queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet";
 
+
     // add the api key parameter (the one we received when we registered)
-    console.log('params obj', params)
-    console.log('params.key', params.key)
     queryURL += "&key=" + params.key;
 
     // grab text the user typed into the search input, add as parameter to url (use initial params for componentDidMount)
     let q = params.q;
-    // let q = this.state.year + this.state.make + this.state.model
-    queryURL += "&q=" + q;
+    let escapedQ = encodeURIComponent(q)
+    queryURL += "&q=" + escapedQ;
 
     // add the type parameter
     queryURL += "&type=" + params.type;
@@ -150,6 +161,7 @@ class Research extends Component {
     // add the maxResults parameter
     queryURL += "&maxResults=" + params.maxResults;
 
+    console.log('params obj', params)
     // Logging the URL so we have access to it for troubleshooting
     console.log("---------------\nURL: " + queryURL + "\n---------------");
     return queryURL;
@@ -159,7 +171,7 @@ class Research extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col lg={{ size: 8, offset: 2 }} md={{size: 8, offset: 2}} sm={12} xs={12}>
+          <Col lg={{ size: 6, offset: 3 }} md={{size: 6, offset: 3}} sm={12} xs={12}>
             <Jumbotron>
               <h1>Search Reviews!</h1>
             </Jumbotron>
