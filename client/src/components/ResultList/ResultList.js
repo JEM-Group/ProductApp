@@ -6,9 +6,13 @@ const ResultList = props => (
     {props.results.map(result => (
       <li className="list-group-item" key={result.id.videoId}>
         <p>{result.snippet.title}</p>
-        <iframe width="420" height="315"
+        <div className="embed-responsive embed-responsive-16by9">
+          <iframe className="embed-responsive-item" src={"https://www.youtube.com/embed/" + result.id.videoId} allowfullscreen></iframe>
+        </div>
+
+        {/*<iframe width="420" height="315"
         src={"https://www.youtube.com/embed/" + result.id.videoId}>
-        </iframe>
+        </iframe>*/}
         {/*<a href={"https://www.youtube.com/watch?v=" + result.id.videoId}>
 	        <img
 	          alt={result.snippet.title}

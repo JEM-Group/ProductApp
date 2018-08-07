@@ -1,5 +1,5 @@
-.jumbotron{
-  padding: 3rem !important;
+.research .jumbotron{
+  padding: 3rem 0 !important;
 }
 input {
 	margin-bottom: 1rem !important;
@@ -7,6 +7,8 @@ input {
 iframe {
 	display: block;
 	margin: 0 auto;
+	/*width: auto;
+	height: auto;*/
 }
 .list-group {
 	margin: 2rem auto !important;
@@ -16,31 +18,3 @@ iframe {
 	font-size: 1.25rem;
 	margin: 1rem auto !important;
 }
-/*.row > * {
-	margin: 0 auto;
-}
-form {
-	margin-bottom: 3rem;
-}
-
-.list-group-item {
-	border: none !important;
-}
-.list-group-item > * {
-	display: block;
-	margin: 0 auto;
-	text-align: center;
-}*/
-/*
-
-form input {
-	margin: 0 auto;
-	margin-bottom: 1rem;
-}
-
-form select {
-	display: block;
-	width: 100%;
-	margin-bottom: 1rem;
-}
-*/
