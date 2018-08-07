@@ -27,7 +27,7 @@ class Home extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col lg={{ size: 6, offset: 3 }} md={{size: 6, offset: 3}} sm={12} xs={12}>
+          <Col lg={{ size: 4, offset: 4 }} md={{size: 6, offset: 3}} sm={12} xs={12}>
             <Jumbotron>
               <h1>JEM Finder</h1>
               <p>The world's most advanced</p>
