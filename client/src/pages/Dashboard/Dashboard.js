@@ -7,28 +7,46 @@ import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } from "../../components/Form";
 import { BtnLrg}  from "../../components/Buttons";
-// import options from "../../auto.json";
-import Card from "../../components/Card";
-// import {BarChart, Donut} from "../../components/Graph";
 import {Donut} from "../../components/Graph";
 import {Bar} from 'react-chartjs-2';
+// import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap';
+import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText } from 'reactstrap';
 
 
 const barChart1 = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  labels: ['vehicle 1', 'vehicle 2'],
   datasets: [
     {
-      label: 'My First dataset',
+      label: 'vehicle data',
       backgroundColor: 'rgba(255,99,132,0.2)',
       borderColor: 'rgba(255,99,132,1)',
       borderWidth: 1,
       hoverBackgroundColor: 'rgba(255,99,132,0.4)',
       hoverBorderColor: 'rgba(255,99,132,1)',
-      data: [65, 59, 80, 81, 56, 55]
+      data: [0,0]
     }
   ]
 };
 
+const dataDoNut = {
+  labels: [
+    'mpg 1',
+    'mpg 2',
+  ],
+  datasets: [{
+    data: [5,5],
+    backgroundColor: [
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56'
+    ],
+    hoverBackgroundColor: [
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56'
+    ]
+  }]
+};
 
 class Dash extends Component {
 
@@ -36,44 +54,25 @@ class Dash extends Component {
     super(props);
     
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-
-    this.dataDoNut = {
-      labels: [
-        'Red',
-        'Black',
-        'Yellow'
-      ],
-      datasets: [{
-        data: [5,5],
-        backgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56'
-        ],
-        hoverBackgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56'
-        ]
-      }]
-    };
   }
+
 
   state = {
     auto1: [],
     auto2: [],
-    make1: "",
-    make2: "",
-    model: "",
-    model2: "",
-    title1: "start",
-    title2: "start",
+    class1: "vehicle class",
+    class2: "vehicle class",
+    train1: "drivetrain",
+    train2: "drivetrain",
+    title1: "Vehicle 1",
+    title2: "Vehicle 2",
     car1: "",
     car2: "",
-    dataDoNut: {},
+    trans1: "transmission",
+    trans2: "transmission",
+    cityMpgDonut: dataDoNut,
     // myData: [5,5],
     chart1Data: barChart1,
 
@@ -92,14 +91,16 @@ class Dash extends Component {
   loadAuto1 = () => {
     API.getDash()
       .then(res =>
-        this.setState({ auto1: res.data, make: "", model: "", synopsis: "", mpg: "", cost: "" })
+        this.setState({ auto1: res.data, make_and_model: "", vehicle_class: "", vehicle_drivetrain: "", trany: "", 
+        cylinders: "", city_mpg: "", highway_mpg: "", fuel_cost: "", greenhouse_gas_score: "", })
       )
       .catch(err => console.log(err));
   };
   loadAuto2 = () => {
     API.getDash()
       .then(res =>
-        this.setState({ auto2: res.data, make: "", model: "", synopsis: "", mpg: "", cost: "" })
+        this.setState({ auto2: res.data, make_and_model: "", vehicle_class: "", vehicle_drivetrain: "", trany: "", 
+        cylinders: "", city_mpg: "", highway_mpg: "", fuel_cost: "", greenhouse_gas_score: "", })
       )
       .catch(err => console.log(err));
   };
@@ -121,28 +122,6 @@ class Dash extends Component {
     console.log("-----------------")
   }
 
-  handleBtnSubmit = e => {
-    // event.preventDefault();
-    console.log("state");
-    console.log(this.state);
-    window.confirm(this.state.auto.make);
-    if (this.state) {
-      // this.setState({make: image})
-
-    }
-  };
-
-  handleClick = (e) => {
-    // console.log('this is:', this);
-    console.log('this is:', e);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-    console.log(event.target.value)
-    // this.handleSubmit(this.state.event.target.value);
-  }
-
   handleSubmit(event) {
     // console.log(event)
     // alert('Your favorite flavor is: ' + this.state.value);
@@ -156,52 +135,116 @@ class Dash extends Component {
     console.log(this.state.second)
 
     const firstData = this.state.first
+    const secondData = this.state.second
     
     console.log("test")
     console.log(this.state.auto1)
     console.log(this.state.auto2)
     
     const arrAuto1 = this.state.auto1;
+    const arrAuto2 = this.state.auto2;
     console.log("test---find---")
     console.log(arrAuto1)
     console.log("test---findInArr---")
     
-    const findInObj = (inObj) =>{
-      return inObj._id === firstData;
+    const findInObj1 = (inObj1) =>{
+      return inObj1._id === firstData;
+    }
+    const findInObj2 = (inObj2) =>{
+      return inObj2._id === secondData;
     }
     
     console.log("test---find Object---")
-    console.log(arrAuto1.find(findInObj))
-    const firstFoundObj = arrAuto1.find(findInObj);
-    console.log(firstFoundObj.cost)
-    console.log("__________________________")
+    console.log(arrAuto1.find(findInObj1))
+    const firstFoundObj = arrAuto1.find(findInObj1);
+    const secondFoundObj = arrAuto2.find(findInObj2);
+    
+    var mm1 = firstFoundObj.make_and_model
+    var vc1 = firstFoundObj.vehicle_class
+    var vd1 = firstFoundObj.vehicle_drivetrain
+    var vt1 = firstFoundObj.trany
+    var num1cyl = firstFoundObj.cylinders
+    var num1cmpg = firstFoundObj.city_mpg
 
-    var oldDataSet = this.state.chart1Data.datasets[0];
-    console.log(oldDataSet)
-    var newData = [2,4,8,16,32,64];
-    var newDataSet = {
-      ...oldDataSet
+    var mm2 = secondFoundObj.make_and_model
+    var vc2 = secondFoundObj.vehicle_class
+    var vd2 = secondFoundObj.vehicle_drivetrain
+    var vt2 = secondFoundObj.trany
+    var num2cyl = secondFoundObj.cylinders
+    var num2cmpg = secondFoundObj.city_mpg
+
+    var old_BarCyl = this.state.chart1Data.datasets[0];
+    console.log(old_BarCyl)
+    var newBarCylData = [];
+    newBarCylData.push(num1cyl,num2cyl)
+    var newBarCylDataSet = {
+      ...old_BarCyl
     };
-    
-    newDataSet.data = newData;
-    
-    var newState = {
+    newBarCylDataSet.data = newBarCylData;
+    var newState_BarCyl = {
       ...barChart1,
-      datasets: [newDataSet]
+      datasets: [newBarCylDataSet]
+    };
+        
+    var old_DonutCityMpg = this.state.cityMpgDonut.datasets[0];
+    var old_DonutCitylabels = this.state.cityMpgDonut;
+    
+    console.log("old labels object----------")
+    console.log(old_DonutCitylabels)
+    
+    var new_DonutCityMpgData = [];
+    var newLabels = [];
+
+    new_DonutCityMpgData.push(num1cmpg,num2cmpg)
+    var new_DonutCityMpgDataSet = {
+      ...old_DonutCityMpg
+    };
+
+    newLabels.push(mm1,mm2)
+    var new_LabelDataSet = {
+      ...old_DonutCitylabels,
+    };
+
+    var newshit = new_LabelDataSet.labels.slice(0);
+    console.log("slice----------")
+    newshit = [];
+    console.log(newshit)
+
+    new_LabelDataSet.labels = newLabels;
+    console.log("new dataset----------")
+    console.log(new_LabelDataSet)
+    console.log("new labels dataset.labels----------")
+    console.log(new_LabelDataSet.labels)
+
+    new_DonutCityMpgDataSet.data = new_DonutCityMpgData;
+    
+    var newState_DonutCityMpg = {
+      ...dataDoNut,
+      datasets: [new_DonutCityMpgDataSet],
+      labels: [mm1,mm2]
     };
     
-    this.setState({chart1Data: newState})
-    console.log(newState)
-
-    // render()
-    // {
-    //   return (
-    //     <Bar data={this.data}/>
-    //   )
-    // }
     
+    // var newState_LabelsDonut = {
+    //   ...dataDoNut,
+    // };
+    console.log(newState_DonutCityMpg)
 
-
+    
+    this.setState({
+      title1: mm1,
+      class1: vc1,
+      train1: vd1,
+      trans1: vt1,
+      title2: mm2,
+      class2: vc2,
+      train2: vd2,
+      trans2: vt2,
+      chart1Data: newState_BarCyl,
+      cityMpgDonut: newState_DonutCityMpg
+    
+    
+    })
     // if (this.state.first) {
     //   this.setState({title1: this.state.first })
     // }
@@ -224,7 +267,7 @@ class Dash extends Component {
                 <DropOption key={auto1._id} 
                 value={auto1._id}
                 >
-                  {auto1.make}
+                  {auto1.make_and_model}
                 </DropOption>
                 ))}
               </Dropdown>
@@ -242,7 +285,7 @@ class Dash extends Component {
                 <DropOption key={auto2._id} 
                 value={auto2._id}
                 >
-                  {auto2.make}
+                  {auto2.make_and_model}
                 </DropOption>
                 ))}
               </Dropdown>
@@ -251,12 +294,14 @@ class Dash extends Component {
             </form>
         <Row>
           <Col size="md-4">
-            <Card
-            title={this.state.title1}
-            cardtext={"RAM"}
-            img={"http://via.placeholder.com/350x150"}
-        
-            />
+          <Card>
+            <CardHeader>{this.state.title1}</CardHeader>
+            <CardBody>
+              <CardTitle>{this.state.class1}</CardTitle>
+              <CardText>{this.state.train1}</CardText>
+            </CardBody>
+            <CardFooter>{this.state.trans1}</CardFooter>
+          </Card>
           </Col>
           <Col size="md-4">
           <div>
@@ -267,21 +312,22 @@ class Dash extends Component {
             options={{
               maintainAspectRatio: true
             }}
-            redraw
           />
           </div>
           <br/>
           <div>
-            <Donut data={this.dataDoNut} />
+            <Donut data={this.state.cityMpgDonut} />
           </div>
           </Col>
           <Col size="md-4">
-            <Card
-            title={this.state.title2}
-            cardtext={"Silverado"}
-            img={"http://via.placeholder.com/350x150"}
-        
-            />
+          <Card>
+            <CardHeader>{this.state.title2}</CardHeader>
+            <CardBody>
+              <CardTitle>{this.state.class2}</CardTitle>
+              <CardText>{this.state.train2}</CardText>
+            </CardBody>
+            <CardFooter>{this.state.trans2}</CardFooter>
+          </Card>
           </Col>
         </Row>
         <Row>

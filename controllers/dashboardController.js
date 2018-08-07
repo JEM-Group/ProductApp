@@ -2,8 +2,6 @@ const db = require("../models");
 const mongoose = require("mongoose");
 var ObjectId = require('mongodb').ObjectID;
 
-
-
 // Defining methods for the booksController
 module.exports = {
   findAll: function(req, res) {

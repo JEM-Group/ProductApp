@@ -2,12 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const dashSchema = new Schema({
-  make: { type: String, required: true },
-  model: { type: String, required: true },
-  mpg: { type: Number, required: true },
-  cost: { type: Number, required: true },
-  synopsis: String,
-  // _id: String,
+  make_and_model: { type: String, required: true },
+  vehicle_class: String,
+  vehicle_drivetrain: String,
+  trany: String,
+  cylinders: Number,
+  city_mpg: Number,
+  highway_mpg: Number,
+  fuel_cost: Number,
+  greenhouse_gas_score: Number,
   date: { type: Date, default: Date.now }
 });
 
