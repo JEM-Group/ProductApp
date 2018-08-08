@@ -1,22 +1,21 @@
 var express    = require("express");
-var bodyParser = require("body-parser");
+// var routes     = require("./routes");
+var app = express();
 var mongoose   = require("mongoose");
-var routes     = require("./routes");
-var app        = express();
 var passport     = require('passport');
 var flash        = require('connect-flash');
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
+var bodyParser = require("body-parser");
 var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
+// Connect to the Mongo DB
+mongoose.connect(configDB.url); // connect to our database
+
 var port = process.env.PORT || 8080; 
 // const PORT = process.env.PORT || 3001; // master branch
-
-// Connect to the Mongo DB
-
-mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -30,7 +29,6 @@ require('./config/passport')(passport); // pass passport for configuration
 // if (process.env.NODE_ENV === "production") {
   // app.use(express.static("client/build"));
 }
-
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -51,6 +49,9 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 
 // Start the API server
-app.listen(port, function() {
-  console.log(`🌎  ==> API Server now listening on port ${port}!`);
-});
+app.listen(port);
+console.log('The magic happens on port ' + port);
+
+// app.listen(port, function() {
+//   console.log(`🌎  ==> API Server now listening on port ${port}!`);
+// });
