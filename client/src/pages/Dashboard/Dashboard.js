@@ -3,14 +3,16 @@ import React, { Component } from "react";
 // import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../../components/Grid";
+// import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } from "../../components/Form";
-import { BtnLrg}  from "../../components/Buttons";
-import {Donut} from "../../components/Graph";
-import {Bar} from 'react-chartjs-2';
+import { TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } from "../../components/Form";
+// import { BtnLrg}  from "../../components/Buttons";
+// import {Donut} from "../../components/Graph";
+import {Bar, Doughnut} from 'react-chartjs-2';
 // import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap';
-import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText } from 'reactstrap';
+import { Card, Button, CardHeader, CardFooter, CardBody, CardSubtitle, CardTitle, CardText, Container, Row, Col } from 'reactstrap';
+import { Form, Input } from 'reactstrap';
+import Select from 'react-select';
 
 
 const barChart1 = {
@@ -55,27 +57,31 @@ class Dash extends Component {
     
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChange1 = this.handleInputChange1.bind(this);
+    this.handleInputChange2 = this.handleInputChange2.bind(this);
   }
 
 
   state = {
-    auto1: [],
-    auto2: [],
+    auto: [],
+    // auto2: [],
     class1: "vehicle class",
     class2: "vehicle class",
     train1: "drivetrain",
     train2: "drivetrain",
-    title1: "Vehicle 1",
-    title2: "Vehicle 2",
+    make1: "Make 1",
+    make2: "Make 2",
+    model1: "Model 1",
+    model2: "Model 2",
     car1: "",
     car2: "",
     trans1: "transmission",
     trans2: "transmission",
     cityMpgDonut: dataDoNut,
-    // myData: [5,5],
     chart1Data: barChart1,
-
+    selectedValues1: [],
+    selectedValues2: []
 
   };
 
@@ -84,65 +90,89 @@ class Dash extends Component {
 	};
 
   componentDidMount() {
-    this.loadAuto1();
-    this.loadAuto2();
+    this.loadAuto();
+    // this.loadAuto2();
   }
 
-  loadAuto1 = () => {
+  loadAuto = () => {
     API.getDash()
       .then(res =>
-        this.setState({ auto1: res.data, make_and_model: "", vehicle_class: "", vehicle_drivetrain: "", trany: "", 
-        cylinders: "", city_mpg: "", highway_mpg: "", fuel_cost: "", greenhouse_gas_score: "", })
-      )
-      .catch(err => console.log(err));
-  };
-  loadAuto2 = () => {
-    API.getDash()
-      .then(res =>
-        this.setState({ auto2: res.data, make_and_model: "", vehicle_class: "", vehicle_drivetrain: "", trany: "", 
+        this.setState({ auto: res.data, vehicle_make_and_model: "", make: "", model: "", vehicle_class: "", vehicle_drivetrain: "", trany: "", 
         cylinders: "", city_mpg: "", highway_mpg: "", fuel_cost: "", greenhouse_gas_score: "", })
       )
       .catch(err => console.log(err));
   };
 
-  handleInputChange(event) {
-    const target = event.target;
-    // const value = target.type === 'checkbox' ? target.checked : target.value;
-    const value = target.value;
-    const name = target.name;
+  handleInputChange1(event) {
+    console.log("event")
+    console.log(event)
+    console.log(event.name)
+    console.log(event.value)
+    console.log("------")
+
+    // const target = event;
+    const value = event.value;
+    const name = event.name;
 
     this.setState({
+      selectedValues1: event,
       [name]: value,
+
     });
     console.log("Change_-_-_-_-_-_")
-    console.log(target)
+    // console.log(target)
     console.log("------")
-    console.log(target.value)
-    console.log(target.name)
+    console.log("selectedValues")
+    console.log(this.state.selectedValues1)
+    console.log("-----------------")
+  }
+  handleInputChange2(event) {
+    console.log("event")
+    console.log(event)
+    console.log(event.name)
+    console.log(event.value)
+    console.log("------")
+
+    // const target = event;
+    const value = event.value;
+    const name = event.name;
+
+    this.setState({
+      selectedValues2: event,
+      [name]: value,
+
+    });
+    console.log("Change_-_-_-_-_-_")
+    // console.log(target)
+    console.log("------")
+    console.log("selectedValues")
+    console.log(this.state.selectedValues2)
     console.log("-----------------")
   }
 
   handleSubmit(event) {
-    // console.log(event)
-    // alert('Your favorite flavor is: ' + this.state.value);
-    // alert('Your favorite flavor is: ' + this.state.first + " | " + this.state.second);
-    // alert('Your favorite flavor is');
     event.preventDefault();
     console.log("SUBMIT----------------")
     console.log(this.state)
     console.log("----------------")
-    console.log(this.state.first)
-    console.log(this.state.second)
 
+    if (this.state.first && this.state.second) {
+      console.log(this.state.first)
+      console.log(this.state.second)
+    }
+    else {
+      alert("You must choose two vehicles");
+      return;
+    }
+    
     const firstData = this.state.first
     const secondData = this.state.second
+
+    console.log("test auto obj")
+    console.log(this.state.auto)
     
-    console.log("test")
-    console.log(this.state.auto1)
-    console.log(this.state.auto2)
-    
-    const arrAuto1 = this.state.auto1;
-    const arrAuto2 = this.state.auto2;
+    const arrAuto1 = this.state.auto;
+    const arrAuto2 = this.state.auto;
     console.log("test---find---")
     console.log(arrAuto1)
     console.log("test---findInArr---")
@@ -159,14 +189,18 @@ class Dash extends Component {
     const firstFoundObj = arrAuto1.find(findInObj1);
     const secondFoundObj = arrAuto2.find(findInObj2);
     
-    var mm1 = firstFoundObj.make_and_model
+    var mm1 = firstFoundObj.vehicle_make_model
+    var mk1 = firstFoundObj.make
+    var md1 = firstFoundObj.model
     var vc1 = firstFoundObj.vehicle_class
     var vd1 = firstFoundObj.vehicle_drivetrain
     var vt1 = firstFoundObj.trany
     var num1cyl = firstFoundObj.cylinders
     var num1cmpg = firstFoundObj.city_mpg
 
-    var mm2 = secondFoundObj.make_and_model
+    var mm2 = secondFoundObj.vehicle_make_model
+    var mk2 = secondFoundObj.make
+    var md2 = secondFoundObj.model
     var vc2 = secondFoundObj.vehicle_class
     var vd2 = secondFoundObj.vehicle_drivetrain
     var vt2 = secondFoundObj.trany
@@ -232,75 +266,75 @@ class Dash extends Component {
 
     
     this.setState({
-      title1: mm1,
+      make1: mk1,
+      model1: md1,
+      make2: mk2,
+      model2: md2,
       class1: vc1,
       train1: vd1,
       trans1: vt1,
-      title2: mm2,
       class2: vc2,
       train2: vd2,
       trans2: vt2,
       chart1Data: newState_BarCyl,
-      cityMpgDonut: newState_DonutCityMpg
-    
+      cityMpgDonut: newState_DonutCityMpg,
+      selectedValues1: [],
+      selectedValues2: []
     
     })
-    // if (this.state.first) {
-    //   this.setState({title1: this.state.first })
-    // }
-    // if (this.state.second) {
-    //   this.setState({title2: this.state.second })
-    // }
+
   }
 
 
 
   render() {
-    // console.log(this.state.auto)
+    const { selectedOption } = this.state;
+  
+
     return (
       <Container fluid>
             <form>
         <Row>
           <Col size="md-4">
-              <Dropdown onChange={this.handleInputChange} name="first" >
-                {this.state.auto1.map(auto1 => (
-                <DropOption key={auto1._id} 
-                value={auto1._id}
-                >
-                  {auto1.make_and_model}
-                </DropOption>
-                ))}
-              </Dropdown>
+          <br/>
+            <Select 
+              options={this.state.auto.map(auto => { return { label: auto.vehicle_make_model, value: auto._id, name:"first" }; })} 
+              onChange={this.handleInputChange1} 
+              value={this.state.selectedValues1} 
+            />
+          </Col>
+          <Col size="md-4" className="text-center"> 
+          <br/>
+          <Button 
+            outline 
+            color="secondary"
+            onClick={this.handleSubmit}
+          >
+              Compare
+          </Button>
           </Col>
           <Col size="md-4">
-          <BtnLrg 
-              onClick={this.handleSubmit}
-              >
-                Compare
-            </BtnLrg>
-          </Col>
-          <Col size="md-4">
-              <Dropdown onChange={this.handleInputChange} name="second"  >
-                {this.state.auto2.map(auto2 => (
-                <DropOption key={auto2._id} 
-                value={auto2._id}
-                >
-                  {auto2.make_and_model}
-                </DropOption>
-                ))}
-              </Dropdown>
+          <br/>
+            <Select 
+              options={this.state.auto.map(auto => { return { label: auto.vehicle_make_model, value: auto._id, name:"second" }; })} 
+              onChange={this.handleInputChange2} 
+              value={this.state.selectedValues2} 
+            />
           </Col>
         </Row>
             </form>
         <Row>
           <Col size="md-4">
           <Card>
-            <CardHeader>{this.state.title1}</CardHeader>
+            <CardHeader>{this.state.make1}</CardHeader>
             <CardBody>
-              <CardTitle>{this.state.class1}</CardTitle>
-              <CardText>{this.state.train1}</CardText>
+              <CardTitle>{this.state.model1}</CardTitle>
+              <CardSubtitle>{this.state.train1}</CardSubtitle>
+              <CardText>
+                  {this.state.trans1}
+              </CardText>
             </CardBody>
-            <CardFooter>{this.state.trans1}</CardFooter>
+            <CardFooter>{this.state.class1}</CardFooter>
           </Card>
           </Col>
           <Col size="md-4">
@@ -316,42 +350,27 @@ class Dash extends Component {
           </div>
           <br/>
           <div>
-            <Donut data={this.state.cityMpgDonut} />
+            <Doughnut data={this.state.cityMpgDonut} />
           </div>
           </Col>
           <Col size="md-4">
           <Card>
-            <CardHeader>{this.state.title2}</CardHeader>
+            <CardHeader>{this.state.make2}</CardHeader>
             <CardBody>
-              <CardTitle>{this.state.class2}</CardTitle>
-              <CardText>{this.state.train2}</CardText>
+              <CardTitle>{this.state.model2}</CardTitle>
+              <CardSubtitle>{this.state.train2}</CardSubtitle>
+              <CardText>
+                  {this.state.trans2}
+              </CardText>
             </CardBody>
-            <CardFooter>{this.state.trans2}</CardFooter>
+            <CardFooter>{this.state.class2}</CardFooter>
           </Card>
           </Col>
         </Row>
         <Row>
           <Col size="md-6">
-          {/* <div>
-              <form onSubmit={this.handleSubmit}>
-                <label>
-                  Pick your favorite flavor:
-                  <select value={this.state.car1} onChange={this.handleInputChange} name="first" >
-                    <option value="1grapefruit">Grapefruit</option>
-                    <option value="1lime">Lime</option>
-                    <option value="1coconut">Coconut</option>
-                    <option value="1mango">Mango</option>
-                  </select>
-                  <select value={this.state.car2} onChange={this.handleInputChange} name="second">
-                    <option value="secfruit">Grapefruit</option>
-                    <option value="2grime">Lime</option>
-                    <option value="2nuts">Coconut</option>
-                    <option value="2django">Mango</option>
-                  </select>
-                </label>
-                <input type="submit" value="Submit" />
-              </form>
-          </div> */}
+          <div>
+          </div>
           </Col>
           <br/>
           <br/>
