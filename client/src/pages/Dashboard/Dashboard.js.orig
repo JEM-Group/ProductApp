@@ -1,6 +1,42 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
+import { Jumbotron, Button, Col, Row, Container, Form, Input } from 'reactstrap';
+import { Dropdown, DropOption } from "../../components/Form";
+import Card from "../../components/Card";
+import {BarChart, Donut} from "../../components/Graph";
 import API from "../../utils/API";
+import { Link } from "react-router-dom";
+import "./Dashboard.css";
+
+const data = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+||||||| merged common ancestors
+// import DeleteBtn from "../../components/DeleteBtn";
+// import Jumbotron from "../../components/Jumbotron";
+import API from "../../utils/API";
+import { Link } from "react-router-dom";
+import { Col, Row, Container } from "../../components/Grid";
+import { List, ListItem } from "../../components/List";
+import { Input, TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } from "../../components/Form";
+import { BtnLrg}  from "../../components/Buttons";
+// import options from "../../auto.json";
+import Card from "../../components/Card";
+import {BarChart, Donut} from "../../components/Graph";
+
+const data = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+=======
+// import DeleteBtn from "../../components/DeleteBtn";
+// import Jumbotron from "../../components/Jumbotron";
+import API from "../../utils/API";
+import { Link } from "react-router-dom";
+// import { Col, Row, Container } from "../../components/Grid";
+import { List, ListItem } from "../../components/List";
+import { TextArea, FormBtn, Dropdown, DropOption, FormDrop, DropType } from "../../components/Form";
+// import { BtnLrg}  from "../../components/Buttons";
+// import {Donut} from "../../components/Graph";
 import {Bar, Doughnut} from 'react-chartjs-2';
+// import { Card, CardBody, Button, CardTitle, CardText, CardImg } from 'reactstrap';
 import { Card, Button, CardHeader, CardFooter, CardBody, CardSubtitle, CardTitle, CardText, Container, Row, Col } from 'reactstrap';
 import { Form, Input } from 'reactstrap';
 import Select from 'react-select';
@@ -8,6 +44,7 @@ import Select from 'react-select';
 
 const barChart1 = {
   labels: ['vehicle 1', 'vehicle 2'],
+>>>>>>> origin/dev-chart-1
   datasets: [
     {
       label: 'vehicle data',
@@ -22,7 +59,6 @@ const barChart1 = {
 };
 
 const dataDoNut = {
-    // Data props
   labels: [
     'mpg 1',
     'mpg 2',
@@ -43,16 +79,77 @@ const dataDoNut = {
 };
 
 class Dash extends Component {
-
   constructor(props) {
     super(props);
+<<<<<<< HEAD
+    this.handleChange = this.handleChange.bind(this);
+||||||| merged common ancestors
+    
+
+    this.handleChange = this.handleChange.bind(this);
+=======
+    
+
+>>>>>>> origin/dev-chart-1
     this.handleSubmit = this.handleSubmit.bind(this);
+<<<<<<< HEAD
+    this.handleInputChange = this.handleInputChange.bind(this);
+
+    // Data props
+    this.dataDoNut = {
+      labels: [
+        'Red',
+        'Black',
+        'Yellow'
+      ],
+      datasets: [{
+        data: this.state.myData,
+        backgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ],
+        hoverBackgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ]
+      }]
+    };
+||||||| merged common ancestors
+    this.handleInputChange = this.handleInputChange.bind(this);
+
+    this.dataDoNut = {
+      labels: [
+        'Red',
+        'Black',
+        'Yellow'
+      ],
+      datasets: [{
+        data: this.state.myData,
+        backgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ],
+        hoverBackgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+        ]
+      }]
+    };
+=======
+    // this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputChange1 = this.handleInputChange1.bind(this);
     this.handleInputChange2 = this.handleInputChange2.bind(this);
+>>>>>>> origin/dev-chart-1
   }
+
 
   state = {
     auto: [],
+    // auto2: [],
     class1: "vehicle class",
     class2: "vehicle class",
     train1: "drivetrain",
@@ -63,12 +160,22 @@ class Dash extends Component {
     model2: "Model 2",
     car1: "",
     car2: "",
+<<<<<<< HEAD
+    dataDoNut: {},
+    myData: [300, 50, 100]
+||||||| merged common ancestors
+    dataDoNut: {},
+    myData: [300, 50, 100],
+
+=======
     trans1: "transmission",
     trans2: "transmission",
     cityMpgDonut: dataDoNut,
     chart1Data: barChart1,
     selectedValues1: [],
     selectedValues2: []
+
+>>>>>>> origin/dev-chart-1
   };
 
   componentWillMount(){
@@ -77,6 +184,7 @@ class Dash extends Component {
 
   componentDidMount() {
     this.loadAuto();
+    // this.loadAuto2();
   }
 
   loadAuto = () => {
@@ -87,6 +195,68 @@ class Dash extends Component {
       )
       .catch(err => console.log(err));
   };
+<<<<<<< HEAD
+  loadAuto2 = () => {
+    API.getDash()
+      .then(res =>
+        this.setState({ auto2: res.data, make: "", model: "", synopsis: "" })
+      )
+      .catch(err => console.log(err));
+  };
+  // loadAuto2 = () => {
+  //   API.getDash()
+  //     .then(res =>
+  //       this.setState({ auto2: res.data, make: "", model: "", synopsis: "" },),
+  //     )
+  //     .catch(err => console.log(err));
+  // };
+
+  // handleInputChange = event => {
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  //   console.log(event.target)
+  //   console.log(this.state.value)
+  // };
+
+  handleInputChange(event) {
+    const target = event.target;
+    // const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
+    const name = target.name;
+||||||| merged common ancestors
+  loadAuto2 = () => {
+    API.getDash()
+      .then(res =>
+        this.setState({ auto2: res.data, make: "", model: "", synopsis: "" })
+      )
+      .catch(err => console.log(err));
+  };
+  // loadAuto2 = () => {
+  //   API.getDash()
+  //     .then(res =>
+  //       this.setState({ auto2: res.data, make: "", model: "", synopsis: "" },),
+  //     )
+  //     .catch(err => console.log(err));
+  // };
+
+  // handleInputChange = event => {
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  //   console.log(event.target)
+  //   console.log(this.state.value)
+  // };
+
+
+  handleInputChange(event) {
+    const target = event.target;
+    // const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
+    const name = target.name;
+=======
 
   handleInputChange1(event) {
     console.log("event")
@@ -94,9 +264,11 @@ class Dash extends Component {
     console.log(event.name)
     console.log(event.value)
     console.log("------")
+
     // const target = event;
     const value = event.value;
     const name = event.name;
+>>>>>>> origin/dev-chart-1
 
     this.setState({
       selectedValues1: event,
@@ -218,6 +390,16 @@ class Dash extends Component {
       ...old_DonutCityMpg
     };
 
+<<<<<<< HEAD
+    // }
+    // findInObj();
+||||||| merged common ancestors
+    // }
+    // findInObj();
+   
+
+
+=======
     newLabels.push(mm1,mm2)
     var new_LabelDataSet = {
       ...old_DonutCitylabels,
@@ -266,6 +448,8 @@ class Dash extends Component {
       selectedValues2: []
     
     })
+>>>>>>> origin/dev-chart-1
+
   }
 
   render() {
@@ -274,16 +458,85 @@ class Dash extends Component {
 
     return (
       <Container fluid>
+<<<<<<< HEAD
         <Form>
           <Row>
             <Col lg={4} md={4} sm={12} xs={12}>
+              <Dropdown onChange={this.handleInputChange} name="first" >
+                {this.state.auto1.map(auto1 => (
+                <DropOption key={auto1._id} 
+                value={auto1._id}
+                >
+                  {auto1.make}
+                </DropOption>
+                ))}
+              </Dropdown>
+            </Col>
+            <Col lg={4} md={4} sm={12} xs={12}>
+            <Button 
+                onClick={this.handleSubmit}
+                >
+                  Compare
+              </Button>
+            </Col>
+            <Col lg={4} md={4} sm={12} xs={12}>
+              <Dropdown onChange={this.handleInputChange} name="second"  >
+                {this.state.auto2.map(auto2 => (
+                <DropOption key={auto2._id} 
+                value={auto2._id}
+                >
+                  {auto2.make}
+                </DropOption>
+                ))}
+              </Dropdown>
+            </Col>
+          </Row>
+        </Form>
+||||||| merged common ancestors
+            <form>
+        <Row>
+          <Col size="md-4">
+              <Dropdown onChange={this.handleInputChange} name="first" >
+                {this.state.auto1.map(auto1 => (
+                <DropOption key={auto1._id} 
+                value={auto1._id}
+                >
+                  {auto1.make}
+                </DropOption>
+                ))}
+              </Dropdown>
+          </Col>
+          <Col size="md-4">
+          <BtnLrg 
+              onClick={this.handleSubmit}
+              >
+                Compare
+            </BtnLrg>
+          </Col>
+          <Col size="md-4">
+              <Dropdown onChange={this.handleInputChange} name="second"  >
+                {this.state.auto2.map(auto2 => (
+                <DropOption key={auto2._id} 
+                value={auto2._id}
+                >
+                  {auto2.make}
+                </DropOption>
+                ))}
+              </Dropdown>
+          </Col>
+        </Row>
+            </form>
+=======
+            <form>
+        <Row>
+          <Col size="md-4">
           <br/>
             <Select 
               options={this.state.auto.map(auto => { return { label: auto.vehicle_make_model, value: auto._id, name:"first" }; })} 
               onChange={this.handleInputChange1} 
               value={this.state.selectedValues1} 
             />
-            </Col>
+          </Col>
           <Col size="md-4" className="text-center"> 
           <br/>
           <Button 
@@ -293,19 +546,36 @@ class Dash extends Component {
           >
               Compare
           </Button>
-            </Col>
-            <Col lg={4} md={4} sm={12} xs={12}>
+          </Col>
+          <Col size="md-4">
           <br/>
             <Select 
               options={this.state.auto.map(auto => { return { label: auto.vehicle_make_model, value: auto._id, name:"second" }; })} 
               onChange={this.handleInputChange2} 
               value={this.state.selectedValues2} 
             />
-            </Col>
-          </Row>
-        </Form>
+          </Col>
+        </Row>
+            </form>
+>>>>>>> origin/dev-chart-1
         <Row>
+<<<<<<< HEAD
           <Col lg={4} md={4} sm={12} xs={12}>
+            <Card
+            title={this.state.title1}
+            cardtext={"RAM"}
+            img={"http://via.placeholder.com/350x150"}
+            />
+||||||| merged common ancestors
+          <Col size="md-4">
+            <Card
+            title={this.state.title1}
+            cardtext={"RAM"}
+            img={"http://via.placeholder.com/350x150"}
+        
+            />
+=======
+          <Col size="md-4">
           <Card>
             <CardHeader>{this.state.make1}</CardHeader>
             <CardBody>
@@ -317,6 +587,7 @@ class Dash extends Component {
             </CardBody>
             <CardFooter>{this.state.class1}</CardFooter>
           </Card>
+>>>>>>> origin/dev-chart-1
           </Col>
           <Col lg={4} md={4} sm={12} xs={12}>
           <div>
@@ -334,7 +605,23 @@ class Dash extends Component {
             <Doughnut data={this.state.cityMpgDonut} />
           </div>
           </Col>
+<<<<<<< HEAD
           <Col lg={4} md={4} sm={12} xs={12}>
+            <Card
+            title={this.state.title2}
+            cardtext={"Silverado"}
+            img={"http://via.placeholder.com/350x150"}
+            />
+||||||| merged common ancestors
+          <Col size="md-4">
+            <Card
+            title={this.state.title2}
+            cardtext={"Silverado"}
+            img={"http://via.placeholder.com/350x150"}
+        
+            />
+=======
+          <Col size="md-4">
           <Card>
             <CardHeader>{this.state.make2}</CardHeader>
             <CardBody>
@@ -346,6 +633,7 @@ class Dash extends Component {
             </CardBody>
             <CardFooter>{this.state.class2}</CardFooter>
           </Card>
+>>>>>>> origin/dev-chart-1
           </Col>
         </Row>
         <Row>
