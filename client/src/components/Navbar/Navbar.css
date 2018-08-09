@@ -1,0 +1,16 @@
+.navbar {
+	background: #404040;
+}
+.navbar .btn {
+	width: 80px;
+	margin: 0 auto;
+}
+.navbar-section {
+	text-align: right;
+}
+.navbar-section .btn {
+  display: inline-block !important;
+}
+.text-secondary span {
+  color: #e8e8e8;
+}

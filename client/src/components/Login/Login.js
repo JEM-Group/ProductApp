@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import axios from 'axios'
+import { Jumbotron, Button, Form, Input,  Col, Row, Container } from 'reactstrap';
+import axios from 'axios';
+import "./Login.css";
 
 class Login extends Component {
     constructor() {
@@ -54,31 +56,36 @@ class Login extends Component {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
             return (
-                <div>
-                    <h4>Login</h4>
-                    <form className="form-horizontal">
+              <Container fluid>
+                <Row>
+                  <Col lg={{ size: 4, offset: 4 }} md={{size: 6, offset: 3}} sm={{size: 6, offset: 3}} xs={12}>
+                    <Jumbotron>
+                      <h1>Log in</h1>
+                    </Jumbotron>
+                    <Form>
                         <div className="form-group">
-                            <div className="col-1 col-ml-auto">
-                                <label className="form-label" htmlFor="username">Username</label>
+                            <div className="col-8">
+                                <label className="form-label" htmlFor="username">Email:</label>
                             </div>
-                            <div className="col-3 col-mr-auto">
-                                <input className="form-input"
+                            <div className="col-12 col-centered">
+                                <Input className="form-input"
                                     type="text"
                                     id="username"
                                     name="username"
-                                    placeholder="Username"
+                                    placeholder="jemfinder@ea.com"
                                     value={this.state.username}
                                     onChange={this.handleChange}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <div className="col-1 col-ml-auto">
+                            <div className="col-8">
                                 <label className="form-label" htmlFor="password">Password: </label>
                             </div>
-                            <div className="col-3 col-mr-auto">
-                                <input className="form-input"
+                            <div className="col-12 col-centered">
+                                <Input className="form-input"
                                     placeholder="password"
+                                    id="password"
                                     type="password"
                                     name="password"
                                     value={this.state.password}
@@ -87,14 +94,16 @@ class Login extends Component {
                             </div>
                         </div>
                         <div className="form-group ">
-                            <div className="col-7"></div>
-                            <button
-                                className="btn btn-primary col-1 col-mr-auto"
+                            <div className="col-4 col-centered"></div>
+                            <Button
+                                className="btn btn-warning btn-lg"
                                 onClick={this.handleSubmit}
-                                type="submit">Login</button>
+                                type="submit">Login</Button>
                         </div>
-                    </form>
-                </div>
+                    </Form>
+                </Col>
+              </Row>
+            </Container>
             )
         }
     }

@@ -1,0 +1,16 @@
+
+.btn {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.col-centered{
+    margin: 0 auto;
+    float: none;
+}
+#username {
+	width: 100%;
+}
+#password {
+	width: 100%;
+}

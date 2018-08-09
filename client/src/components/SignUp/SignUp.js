@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Input } from 'reactstrap';
+import { Jumbotron, Button, Form, Input, Col, Row, Container } from 'reactstrap';
 import axios from 'axios';
 // import './SignUp.css';
 
@@ -57,27 +57,34 @@ class SignUp extends Component {
   }
   render() {
     return (
-			<div className="col-sm-6 col-sm-offset-3">
-		    <Form action="/signup" method="post">
-		      <div className="form-group">
-		          <label htmlFor="email">Email:</label>
-		          <Input type="text" className="form-control" name="email" value={this.state.email} onChange={this.handleChange}>
-		          </Input>
-		      </div>
-		      <div className="form-group">
-		          <label htmlFor="password">Password</label>
-		          <Input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleChange}>
-		          </Input>
-		      </div>
+			<Container fluid>
+        <Row>
+          <Col lg={{ size: 4, offset: 4 }} md={{size: 6, offset: 3}} sm={{size: 6, offset: 3}} xs={12}>
+	          <Jumbotron>
+	            <h1>Sign Up</h1>
+	          </Jumbotron>
+				    <Form action="/signup" method="post">
+				      <div className="form-group">
+				          <label htmlFor="email">Email:</label>
+				          <Input type="text" className="form-control" name="email" placeholder="jemfinder@ea.com" value={this.state.email} onChange={this.handleChange}>
+				          </Input>
+				      </div>
+				      <div className="form-group">
+				          <label htmlFor="password">Password:</label>
+				          <Input type="password" className="form-control" name="password" placeholder="password" value={this.state.password} onChange={this.handleChange}>
+				          </Input>
+				      </div>
 
-		      <Button type="submit" className="btn btn-warning btn-lg">Signup</Button>
-		    </Form>
+				      <Button type="submit" className="btn btn-warning btn-lg">Signup</Button>
+				    </Form>
 
-		    <hr/>
+				    <hr/>
 
-		    <p>Already have an account? <a href="/login">Login</a></p>
-		    <p>Or go <a href="/">home</a>.</p>
-			</div>
+				    <p>Already have an account? <a href="/login">Login</a></p>
+				    <p>Or go <a href="/">home</a>.</p>
+			    </Col>
+			  </Row>
+			</Container>
 		);
 	}
 }
