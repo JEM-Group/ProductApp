@@ -9,49 +9,48 @@ class SignUp extends Component {
     this.state = {
       value: '',
     	email: '',
-    	password: ''
-    };
+    	password: '',
+    	confirmPassword: '',
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-  }
 
   handleChange(event) {
-  	const target = event.target;
-    const value = target.value;
-  	const name = target.name;
-  	console.log(event.target .value)
+  	// const target = event.target;
+   //  const value = target.value;
+  	// const name = target.name;
+  	console.log(event.target.value)
   	this.setState({
-  	  [name]: value
+  	  [event.target.name]: event.target.value
   	}, function () {
-        console.log(this.state.username);
+        console.log(this.state.email);
         console.log(this.state.password);
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    	console.log('sign-up-form, email: ');
+    	console.log('sign-up handleSubmit, email: ');
     	console.log(this.state.email);
-    	//request to server here
-      axios.post('/', {
+    	//request to server to add new email & password
+      axios.post('/user', {
       	email: this.state.email,
       	password: this.state.password
       })
         .then(response => {
-        	console.log('response', response) 
-        	if(response.data){
+        	console.log('response', response)
+        	if(!response.data.errmsg){
         		console.log('successful signup')
         		this.setState({
         			redirectTo: '/login'
         		})
         	} else {
-        		console.log('Sign-up error');
+        		console.log('email already taken');
         	}
         }).catch(error => {
-        	console.log('Sign up server error: ')
+        	console.log('signup  error: ')
         	console.log(error);
         })
   }
@@ -63,7 +62,7 @@ class SignUp extends Component {
 	          <Jumbotron>
 	            <h1>Sign Up</h1>
 	          </Jumbotron>
-				    <Form action="/signup" method="post">
+				    <Form>
 				      <div className="form-group">
 				          <label htmlFor="email">Email:</label>
 				          <Input type="text" className="form-control" name="email" placeholder="jemfinder@ea.com" value={this.state.email} onChange={this.handleChange}>
