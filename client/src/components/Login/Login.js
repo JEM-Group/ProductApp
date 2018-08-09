@@ -94,11 +94,12 @@ class Login extends Component {
                             </div>
                         </div>
                         <div className="form-group ">
-                            <div className="col-4 col-centered"></div>
-                            <Button
-                                className="btn btn-warning btn-lg"
-                                onClick={this.handleSubmit}
-                                type="submit">Login</Button>
+                            <div className="col-12 col-centered">
+	                            <Button
+	                                className="btn btn-warning btn-lg"
+	                                onClick={this.handleSubmit}
+	                                type="submit">Login</Button>
+                            </div>
                         </div>
                     </Form>
                 </Col>

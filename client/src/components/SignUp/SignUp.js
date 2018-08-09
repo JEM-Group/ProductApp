@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Jumbotron, Button, Form, Input, Col, Row, Container } from 'reactstrap';
 import axios from 'axios';
-// import './SignUp.css';
+import './SignUp.css';
 
 class SignUp extends Component {
   constructor(props) {
@@ -74,8 +74,11 @@ class SignUp extends Component {
 				          <Input type="password" className="form-control" name="password" placeholder="password" value={this.state.password} onChange={this.handleChange}>
 				          </Input>
 				      </div>
-
-				      <Button type="submit" className="btn btn-warning btn-lg">Signup</Button>
+              <div className="form-group ">
+                  <div className="col-12 col-centered">
+                    <Button type="submit" className="btn btn-warning btn-lg">Signup</Button>
+                  </div>
+              </div>
 				    </Form>
 
 				    <hr/>

@@ -32,25 +32,29 @@ class Home extends Component {
               <h1>JEM Finder</h1>
               <p>The world's most advanced</p>
               <p>automotive research app</p>
+              <div className="col-8 col-centered">
+	              <Button
+	                tag="a"
+	                color="warning"
+	                size="large"
+	                href="/research"
+	                // target="_blank"
+		            >
+		              Search Reviews
+		            </Button>
+		          </div>
+		          <div className="col-8 col-centered">
+		            <Button
+		              tag="a"
+		              color="warning"
+		              size="large"
+		              href="compare"
+		              // target="_blank"
+		            >
+		              Compare Cars
+		            </Button>
+		          </div>
             </Jumbotron>
-              <Button
-                tag="a"
-                color="success"
-                size="large"
-                href="/research"
-                // target="_blank"
-	            >
-	              Search Reviews
-	            </Button>
-	            <Button
-	              tag="a"
-	              color="success"
-	              size="large"
-	              href="compare"
-	              // target="_blank"
-	            >
-	              Compare Cars
-	            </Button>
           </Col>
         </Row>
       </Container>

@@ -16,3 +16,12 @@ iframe {
 	font-size: 1.25rem;
 	margin: 1rem auto !important;
 }
+
+.year-select {
+	width: 100%;
+}
+.btn {
+	width: 200px;
+	margin: 1rem auto;
+	margin-bottom: 2rem;
+}

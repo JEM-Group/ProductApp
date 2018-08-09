@@ -214,11 +214,16 @@ class Dash extends Component {
               </Dropdown>
             </Col>
             <Col lg={4} md={4} sm={12} xs={12}>
-            <Button 
-                onClick={this.handleSubmit}
-                >
-                  Compare
-              </Button>
+              <div className="form-group ">
+                <div className="col-12 col-centered">
+			            <Button
+			                className="btn btn-warning btn-lg"
+			                onClick={this.handleSubmit}
+			                >
+			                  Compare
+			              </Button>
+			          </div>
+			        </div>
             </Col>
             <Col lg={4} md={4} sm={12} xs={12}>
               <Dropdown onChange={this.handleInputChange} name="second"  >
