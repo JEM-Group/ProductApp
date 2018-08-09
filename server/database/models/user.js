@@ -1,46 +1,36 @@
-// app/models/user.js
-// load the things we need
-var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const bcrypt = require('bcrypt-nodejs');
+mongoose.promise = Promise
 
-// define the schema for our user model
-var userSchema = mongoose.Schema({
+// Define userSchema
+const userSchema = new Schema({
 
-    local            : {
-        email        : String,
-        password     : String,
+    username: { type: String, unique: false, required: false },
+    password: { type: String, unique: false, required: false }
+
+})
+// Define schema methods
+userSchema.methods = {
+    checkPassword: function (inputPassword) {
+        return bcrypt.compareSync(inputPassword, this.password)
     },
-    facebook         : {
-        id           : String,
-        token        : String,
-        name         : String,
-        email        : String
-    },
-    twitter          : {
-        id           : String,
-        token        : String,
-        displayName  : String,
-        username     : String
-    },
-    google           : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
+    hashPassword: plainTextPassword => {
+        return bcrypt.hashSync(plainTextPassword, 10)
     }
+}
 
-});
+// Define hooks for pre-saving
+userSchema.pre('save', function (next) {
+    if (!this.password) {
+        console.log('models/user.js =======NO PASSWORD PROVIDED=======')
+        next()
+    } else {
+        console.log('models/user.js hashPassword in pre save')
+        this.password = this.hashPassword(this.password)
+        next()
+    }
+})
 
-// methods ======================
-// generating a hash
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
-};
-
-// create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
+module.exports = User

@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Button, Form, Input } from 'reactstrap';
-import axios from 'axios'
+import axios from 'axios';
 // import './SignUp.css';
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    	// value:"",
-    	username: '',
+      value: '',
+    	email: '',
     	password: ''
     };
     this.handleChange = this.handleChange.bind(this);
@@ -16,30 +16,13 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-
-    // let publishedAfterRfcDate = parseRfc3339date(30)
-    // params.publishedAfter = publishedAfterRfcDate
-
-    // let starterQuery = this.buildQueryURL(params)
-    // API.loadReviews(starterQuery)
-    //   .then(res => {
-    //     // console.log(res.data.items);
-    //     this.setState({
-    //         results: res.data.items
-    //     }, function () {
-    //         console.log(this.state.results);
-    //     });
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   }
 
   handleChange(event) {
   	const target = event.target;
     const value = target.value;
   	const name = target.name;
-  	console.log(event.target.value)
+  	console.log(event.target .value)
   	this.setState({
   	  [name]: value
   	}, function () {
@@ -50,11 +33,11 @@ class SignUp extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    	console.log('sign-up-form, username: ');
-    	console.log(this.state.username);
+    	console.log('sign-up-form, email: ');
+    	console.log(this.state.email);
     	//request to server here
       axios.post('/', {
-      	username: this.state.username,
+      	email: this.state.email,
       	password: this.state.password
       })
         .then(response => {
@@ -72,59 +55,22 @@ class SignUp extends Component {
         	console.log(error);
         })
   }
-		// // Updating q query param to match state
-
-		// // let keywords = [(year + " " +  make + " " + model + ' car review'), (year + " " +  make + " " + model + ' automobile review')]
-		// // let newKeyword = keywords.join(' | ');
-		// let newKeyword = (year + ' ' +  make + ' ' + model + ' review')
-		// console.log(newKeyword)
-		// params.q = newKeyword
-		// console.log(params.q)
-
-  //   // Updating publishedAfter query param to match state
-  //   let currentYear = (new Date()).getFullYear()
-  //   console.log(currentYear)
-
-  //   // Setting publishedAfter date as one year prior to user inputted year to account for cars that get released prior to their 'model year'
-  //   let publishedAfterDaysAgo = 365*(currentYear - year - 1)
-  //   console.log(publishedAfterDaysAgo)
-		// let publishedAfterRfcDate = parseRfc3339date(publishedAfterDaysAgo)
-		// params.publishedAfter = publishedAfterRfcDate
-		// console.log(params.publishedAfter)
-
-  //   // Make API call based on user input i.e. new state
-		// let query = this.buildQueryURL(params)
-		// API.loadReviews(query)
-		//   .then(res => {
-		//     // console.log(res.data.items);
-		//     this.setState({
-		//     	  results: res.data.items
-		//     }, function () {
-		//         console.log(this.state.results);
-		//     });
-		//   })
-		//   .catch(function (error) {
-		//     console.log(error);
-		//   });
-
-  
-
   render() {
     return (
-			<div class="col-sm-6 col-sm-offset-3">
+			<div className="col-sm-6 col-sm-offset-3">
 		    <Form action="/signup" method="post">
-		      <div class="form-group">
-		          <label htmlFor="username">Username:</label>
-		          <Input type="text" class="form-control" name="username" value={this.state.username} onChange={this.handleChange}>
+		      <div className="form-group">
+		          <label htmlFor="email">Email:</label>
+		          <Input type="text" className="form-control" name="email" value={this.state.email} onChange={this.handleChange}>
 		          </Input>
 		      </div>
-		      <div class="form-group">
+		      <div className="form-group">
 		          <label htmlFor="password">Password</label>
-		          <Input type="password" class="form-control" name="password" value={this.state.username} onChange={this.handleChange}>
+		          <Input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleChange}>
 		          </Input>
 		      </div>
 
-		      <Button type="submit" class="btn btn-warning btn-lg">Signup</Button>
+		      <Button type="submit" className="btn btn-warning btn-lg">Signup</Button>
 		    </Form>
 
 		    <hr/>
