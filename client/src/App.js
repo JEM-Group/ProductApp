@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Chart from "./pages/Chart";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
+import SignUp from "./components/SignUp"
 import {MyNavbar} from "./components/MyNavbar";
 
 const App = () => (
@@ -15,6 +16,8 @@ const App = () => (
       <MyNavbar />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/signup" component={SignUp} />
+        {/*<Route exact path="/login" component={Login} />*/}
         <Route exact path="/research" component={Research} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/books/:id" component={Detail} />

@@ -50,7 +50,6 @@ export class MyNavbar extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    Login
                   </DropdownItem>
                   <DropdownItem>
                     Preferences

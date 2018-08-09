@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../database/models");
 const mongoose = require("mongoose");
 var ObjectId = require('mongodb').ObjectID;
 
@@ -20,7 +20,7 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  
+
 
 
   // findById: function(req, res) {

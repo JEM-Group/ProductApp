@@ -80,8 +80,6 @@ class Research extends Component {
   	this.setState({
   	  [name]: value
   	});
-
-   // this.setState({value: event.target.value});
     console.log(event.target.value)
   }
 
