@@ -4,28 +4,29 @@ import {Bar, Doughnut} from 'react-chartjs-2';
 import { Card, Button, CardHeader, CardFooter, CardBody, CardSubtitle, CardTitle, CardText, Container, Row, Col } from 'reactstrap';
 import { Form, Input } from 'reactstrap';
 import Select from 'react-select';
+import "./Dashboard.css";
 
 
-const barChart1 = {
+
+const baseBarChart = {
   labels: ['vehicle 1', 'vehicle 2'],
   datasets: [
     {
       label: 'vehicle data',
-      backgroundColor: 'rgba(255,99,132,0.2)',
+      backgroundColor: ['rgba(255,99,132,0.2)','rgba(12, 36, 198, 0.64)'],
       borderColor: 'rgba(255,99,132,1)',
       borderWidth: 1,
       hoverBackgroundColor: 'rgba(255,99,132,0.4)',
       hoverBorderColor: 'rgba(255,99,132,1)',
       data: [0,0]
     }
-  ]
+  ],
 };
 
 const dataDoNut = {
-    // Data props
   labels: [
-    'mpg 1',
-    'mpg 2',
+    'Vehicle 1',
+    'Vehicle 2',
   ],
   datasets: [{
     data: [5,5],
@@ -40,6 +41,16 @@ const dataDoNut = {
     '#FFCE56'
     ]
   }]
+};
+
+const legendOpts = {
+  display: true,
+  position: 'top',
+  fullWidth: true,
+  reverse: false,
+  labels: {
+  fontColor: 'rgb(255, 255, 255)'
+  }
 };
 
 class Dash extends Component {
@@ -61,19 +72,17 @@ class Dash extends Component {
     make2: "Make 2",
     model1: "Model 1",
     model2: "Model 2",
-    car1: "",
-    car2: "",
     trans1: "transmission",
     trans2: "transmission",
-    cityMpgDonut: dataDoNut,
-    chart1Data: barChart1,
+    cylinder_1: "#00",
+    cylinder_2: "#00",
+    cityMpgChart: baseBarChart,
+    highwayMpgChart: baseBarChart,
+    chart1Data: baseBarChart,
     selectedValues1: [],
-    selectedValues2: []
+    selectedValues2: [],
+    legend: legendOpts,
   };
-
-  componentWillMount(){
-    // this.setState({chart1Data: barChart1});
-	};
 
   componentDidMount() {
     this.loadAuto();
@@ -89,54 +98,26 @@ class Dash extends Component {
   };
 
   handleInputChange1(event) {
-    console.log("event")
-    console.log(event)
-    console.log(event.name)
-    console.log(event.value)
-    console.log("------")
-    // const target = event;
     const value = event.value;
     const name = event.name;
-
     this.setState({
       selectedValues1: event,
       [name]: value,
-
     });
-    console.log("Change_-_-_-_-_-_")
-    // console.log(target)
-    console.log("------")
-    console.log("selectedValues")
-    console.log(this.state.selectedValues1)
-    console.log("-----------------")
+
   }
   handleInputChange2(event) {
-    console.log("event")
-    console.log(event)
-    console.log(event.name)
-    console.log(event.value)
-    console.log("------")
-
-    // const target = event;
     const value = event.value;
     const name = event.name;
-
     this.setState({
       selectedValues2: event,
       [name]: value,
-
     });
-    console.log("Change_-_-_-_-_-_")
-    // console.log(target)
-    console.log("------")
-    console.log("selectedValues")
-    console.log(this.state.selectedValues2)
-    console.log("-----------------")
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("SUBMIT----------------")
+    console.log("SUBMIT-------allStates---------")
     console.log(this.state)
     console.log("----------------")
 
@@ -181,7 +162,8 @@ class Dash extends Component {
     var vt1 = firstFoundObj.trany
     var num1cyl = firstFoundObj.cylinders
     var num1cmpg = firstFoundObj.city_mpg
-
+    var num1hwmpg = firstFoundObj.highway_mpg
+    
     var mm2 = secondFoundObj.vehicle_make_model
     var mk2 = secondFoundObj.make
     var md2 = secondFoundObj.model
@@ -190,7 +172,45 @@ class Dash extends Component {
     var vt2 = secondFoundObj.trany
     var num2cyl = secondFoundObj.cylinders
     var num2cmpg = secondFoundObj.city_mpg
+    var num2hwmpg = secondFoundObj.highway_mpg
 
+    //CITY - bar setting
+    var old_CityChart = this.state.cityMpgChart.datasets[0];
+    console.log(old_CityChart)
+    var newCityBarData = [];
+    newCityBarData.push(num1cmpg,num2cmpg)
+    var newCityBarDataSet = {
+      ...old_CityChart
+    };
+    newCityBarDataSet.data = newCityBarData;
+    var newState_CityBar = {
+      ...baseBarChart,
+      datasets: [newCityBarDataSet],
+      labels: [
+        mm1 + " | " + num1cmpg + " mpg" , 
+        mm2 + " | " + num2cmpg + " mpg" 
+      ]
+    };
+
+    //HIGHWAY - bar setting
+    var old_highwayChart = this.state.highwayMpgChart.datasets[0];
+    console.log(old_highwayChart)
+    var newHighwayBarData = [];
+    newHighwayBarData.push(num1cmpg,num2cmpg)
+    var newHighwayBarDataSet = {
+      ...old_highwayChart
+    };
+    newHighwayBarDataSet.data = newHighwayBarData;
+    var newState_HighwayBar = {
+      ...baseBarChart,
+      datasets: [newHighwayBarDataSet],
+      labels: [
+        mm1 + " | " + num1hwmpg + " mpg" , 
+        mm2 + " | " + num2hwmpg + " mpg" 
+      ]
+    };
+
+    //cylinder setting
     var old_BarCyl = this.state.chart1Data.datasets[0];
     console.log(old_BarCyl)
     var newBarCylData = [];
@@ -200,54 +220,44 @@ class Dash extends Component {
     };
     newBarCylDataSet.data = newBarCylData;
     var newState_BarCyl = {
-      ...barChart1,
+      ...baseBarChart,
       datasets: [newBarCylDataSet]
     };
         
-    var old_DonutCityMpg = this.state.cityMpgDonut.datasets[0];
-    var old_DonutCitylabels = this.state.cityMpgDonut;
-    
-    console.log("old labels object----------")
-    console.log(old_DonutCitylabels)
-    
-    var new_DonutCityMpgData = [];
-    var newLabels = [];
-
-    new_DonutCityMpgData.push(num1cmpg,num2cmpg)
-    var new_DonutCityMpgDataSet = {
-      ...old_DonutCityMpg
-    };
-
-    newLabels.push(mm1,mm2)
-    var new_LabelDataSet = {
-      ...old_DonutCitylabels,
-    };
-
-    var newshit = new_LabelDataSet.labels.slice(0);
-    console.log("slice----------")
-    newshit = [];
-    console.log(newshit)
-
-    new_LabelDataSet.labels = newLabels;
-    console.log("new dataset----------")
-    console.log(new_LabelDataSet)
-    console.log("new labels dataset.labels----------")
-    console.log(new_LabelDataSet.labels)
-
-    new_DonutCityMpgDataSet.data = new_DonutCityMpgData;
-    
-    var newState_DonutCityMpg = {
-      ...dataDoNut,
-      datasets: [new_DonutCityMpgDataSet],
-      labels: [mm1,mm2]
-    };
-    
-    
-    // var newState_LabelsDonut = {
-    //   ...dataDoNut,
+    //CITY - set new state data
+    // var old_DonutCityMpg = this.state.cityMpgChart.datasets[0];
+    // var new_DonutCityMpgData = [];
+    // new_DonutCityMpgData.push(num1cmpg,num2cmpg)
+    // var new_DonutCityMpgDataSet = {
+    //   ...old_DonutCityMpg
     // };
-    console.log(newState_DonutCityMpg)
+    // new_DonutCityMpgDataSet.data = new_DonutCityMpgData;
+    // var newState_DonutCityMpg = {
+    //   ...dataDoNut,
+    //   datasets: [new_DonutCityMpgDataSet],
+    //   labels: [mm1 + " \n" + num1cmpg, mm2 + " \n" + num2cmpg ]
+    // };
+    
+    //HIGHWAY - set new state data
+    var old_HighwayMpg = this.state.highwayMpgChart.datasets[0];
 
+    //color setting
+    console.log("old_HighwayMpg--------------")
+    console.log(old_HighwayMpg.backgroundColor)
+
+
+    var new_HighwayMpgDonutData = [];
+    new_HighwayMpgDonutData.push(num1hwmpg,num2hwmpg)
+    var new_HigwayMpgDataSet = {
+      ...old_HighwayMpg
+    };
+    new_HigwayMpgDataSet.data = new_HighwayMpgDonutData;
+    var newState_HighwayMpg = {
+      ...dataDoNut,
+      datasets: [new_HigwayMpgDataSet],
+      labels: [mm1 + " \n" + num1hwmpg, mm2 + " \n" + num2hwmpg ]
+    };
+    
     
     this.setState({
       make1: mk1,
@@ -261,7 +271,8 @@ class Dash extends Component {
       train2: vd2,
       trans2: vt2,
       chart1Data: newState_BarCyl,
-      cityMpgDonut: newState_DonutCityMpg,
+      cityMpgChart: newState_CityBar,
+      highwayMpgChart: newState_HighwayBar,
       selectedValues1: [],
       selectedValues2: []
     
@@ -269,15 +280,20 @@ class Dash extends Component {
   }
 
   render() {
-    const { selectedOption } = this.state;
-  
 
     return (
       <Container fluid>
+          <Row>
+            <Col className="text-center">
+            <h1 className="display-3">My Dashboard</h1>
+            <p className="h5">Compare vehicles based on input costs and environmental ratings</p>
+            <hr/>
+            </Col>
+          </Row>
+          <br/>
         <Form>
           <Row>
             <Col lg={4} md={4} sm={12} xs={12}>
-          <br/>
             <Select 
               options={this.state.auto.map(auto => { return { label: auto.vehicle_make_model, value: auto._id, name:"first" }; })} 
               onChange={this.handleInputChange1} 
@@ -285,17 +301,15 @@ class Dash extends Component {
             />
             </Col>
           <Col size="md-4" className="text-center"> 
-          <br/>
           <Button 
             outline 
             color="secondary"
             onClick={this.handleSubmit}
           >
-              Compare
+            Compare Vehicles
           </Button>
             </Col>
             <Col lg={4} md={4} sm={12} xs={12}>
-          <br/>
             <Select 
               options={this.state.auto.map(auto => { return { label: auto.vehicle_make_model, value: auto._id, name:"second" }; })} 
               onChange={this.handleInputChange2} 
@@ -306,7 +320,7 @@ class Dash extends Component {
         </Form>
         <Row>
           <Col lg={4} md={4} sm={12} xs={12}>
-          <Card>
+          <Card className="bg-primary text-center" >
             <CardHeader>{this.state.make1}</CardHeader>
             <CardBody>
               <CardTitle>{this.state.model1}</CardTitle>
@@ -319,23 +333,10 @@ class Dash extends Component {
           </Card>
           </Col>
           <Col lg={4} md={4} sm={12} xs={12}>
-          <div>
-          <Bar
-            data={this.state.chart1Data}
-            width={100}
-            height={50}
-            options={{
-              maintainAspectRatio: true
-            }}
-          />
-          </div>
           <br/>
-          <div>
-            <Doughnut data={this.state.cityMpgDonut} />
-          </div>
           </Col>
           <Col lg={4} md={4} sm={12} xs={12}>
-          <Card>
+          <Card className="bg-primary text-center">
             <CardHeader>{this.state.make2}</CardHeader>
             <CardBody>
               <CardTitle>{this.state.model2}</CardTitle>
@@ -348,9 +349,126 @@ class Dash extends Component {
           </Card>
           </Col>
         </Row>
+        <br/>
         <Row>
-          <Col size="md-6">
+          <Col md="2">
           <div>
+            row - city
+          </div>
+          </Col>
+          <Col md="8">
+              <Card className="bg-dark">
+             <h3>
+                City
+                <small className="text-muted"> Miles per Gallon</small>
+              </h3>
+              <Bar
+                data={this.state.cityMpgChart}
+                width={100}
+                height={50}
+                options={{
+                  maintainAspectRatio: true,
+                  legend: {
+                    display: true,
+                    labels: {
+                        fontColor: 'rgb(255, 255, 255)'
+                    }},
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }}
+              />
+              </Card>
+          </Col>
+          <Col md="2">
+          <div>
+            test3
+          </div>
+          </Col>
+        <br/>
+        </Row>
+        <br/>
+        <Row>
+          <Col md="2">
+          <div>
+            row - highway_mpg
+          </div>
+          </Col>
+          <Col md="8">
+            <div>
+              <Card className="bg-dark">
+             <h3>
+                Highway
+                <small className="text-muted"> Miles per Gallon</small>
+              </h3>
+              <Bar
+                data={this.state.highwayMpgChart}
+                width={100}
+                height={50}
+                options={{
+                  maintainAspectRatio: true,
+                  legend: {
+                    display: true,
+                    labels: {
+                        fontColor: 'rgb(255, 255, 255)'
+                    }},
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }}
+              />
+              </Card>
+            </div>
+          </Col>
+          <Col md="2">
+          <div>
+            test3
+          </div>
+          </Col>
+        <br/>
+        <br/>
+        </Row>
+        <br/>
+        <Row>
+          <Col md="2">
+          <div>
+            row last
+            col left
+          </div>
+          </Col>
+          <Col md="8">
+          <Card className="bg-dark">
+              <h3>
+                Cylinders
+                <small className="text-muted"> Comparison</small>
+              </h3>
+              <h1 className="display-1"> {this.state.cylinder_1} </h1>
+            <Bar
+              data={this.state.chart1Data}
+              width={100}
+              height={50}
+              options={{
+                maintainAspectRatio: true,
+                legend: {
+                  display: true,
+                  labels: {
+                      fontColor: 'rgb(255, 255, 255)'
+                  }}
+              }}
+            />
+          </Card>
+          </Col>
+          <Col md="2">
+          <div>
+            col right
           </div>
           </Col>
         <br/>
