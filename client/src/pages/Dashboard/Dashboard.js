@@ -12,7 +12,7 @@ const baseBarChart = {
   labels: ['vehicle 1', 'vehicle 2'],
   datasets: [
     {
-      label: 'vehicle data',
+      label: '',
       backgroundColor: ['rgba(255,99,132,0.2)','rgba(12, 36, 198, 0.64)'],
       borderColor: 'rgba(255,99,132,1)',
       borderWidth: 1,
@@ -23,13 +23,13 @@ const baseBarChart = {
   ],
 };
 
-const dataDoNut = {
+const baseDonut = {
   labels: [
     'Vehicle 1',
     'Vehicle 2',
   ],
   datasets: [{
-    data: [5,5],
+    data: [0,0],
     backgroundColor: [
     '#FF6384',
     '#36A2EB',
@@ -78,7 +78,8 @@ class Dash extends Component {
     cylinder_2: "#00",
     cityMpgChart: baseBarChart,
     highwayMpgChart: baseBarChart,
-    chart1Data: baseBarChart,
+    greenhouseChart: baseBarChart,
+    fuelCostChart: baseDonut,
     selectedValues1: [],
     selectedValues2: [],
     legend: legendOpts,
@@ -154,25 +155,29 @@ class Dash extends Component {
     const firstFoundObj = arrAuto1.find(findInObj1);
     const secondFoundObj = arrAuto2.find(findInObj2);
     
-    var mm1 = firstFoundObj.vehicle_make_model
-    var mk1 = firstFoundObj.make
-    var md1 = firstFoundObj.model
-    var vc1 = firstFoundObj.vehicle_class
-    var vd1 = firstFoundObj.vehicle_drivetrain
-    var vt1 = firstFoundObj.trany
-    var num1cyl = firstFoundObj.cylinders
-    var num1cmpg = firstFoundObj.city_mpg
-    var num1hwmpg = firstFoundObj.highway_mpg
+    var mm1 = firstFoundObj.vehicle_make_model;
+    var mk1 = firstFoundObj.make;
+    var md1 = firstFoundObj.model;
+    var vc1 = firstFoundObj.vehicle_class;
+    var vd1 = firstFoundObj.vehicle_drivetrain;
+    var vt1 = firstFoundObj.trany;
+    var num1cyl = firstFoundObj.cylinders;
+    var num1cmpg = firstFoundObj.city_mpg;
+    var num1hwmpg = firstFoundObj.highway_mpg;
+    var num1fc = firstFoundObj.fuel_cost;
+    var num1ghg = firstFoundObj.greenhouse_gas_score;
     
-    var mm2 = secondFoundObj.vehicle_make_model
-    var mk2 = secondFoundObj.make
-    var md2 = secondFoundObj.model
-    var vc2 = secondFoundObj.vehicle_class
-    var vd2 = secondFoundObj.vehicle_drivetrain
-    var vt2 = secondFoundObj.trany
-    var num2cyl = secondFoundObj.cylinders
-    var num2cmpg = secondFoundObj.city_mpg
-    var num2hwmpg = secondFoundObj.highway_mpg
+    var mm2 = secondFoundObj.vehicle_make_model;
+    var mk2 = secondFoundObj.make;
+    var md2 = secondFoundObj.model;
+    var vc2 = secondFoundObj.vehicle_class;
+    var vd2 = secondFoundObj.vehicle_drivetrain;
+    var vt2 = secondFoundObj.trany;
+    var num2cyl = secondFoundObj.cylinders;
+    var num2cmpg = secondFoundObj.city_mpg;
+    var num2hwmpg = secondFoundObj.highway_mpg;
+    var num2fc = secondFoundObj.fuel_cost;
+    var num2ghg = secondFoundObj.greenhouse_gas_score;
 
     //CITY - bar setting
     var old_CityChart = this.state.cityMpgChart.datasets[0];
@@ -183,8 +188,10 @@ class Dash extends Component {
       ...old_CityChart
     };
     newCityBarDataSet.data = newCityBarData;
+    newCityBarDataSet.label = "";
     var newState_CityBar = {
       ...baseBarChart,
+      datasets: [newCityBarDataSet],
       datasets: [newCityBarDataSet],
       labels: [
         mm1 + " | " + num1cmpg + " mpg" , 
@@ -210,54 +217,42 @@ class Dash extends Component {
       ]
     };
 
-    //cylinder setting
-    var old_BarCyl = this.state.chart1Data.datasets[0];
-    console.log(old_BarCyl)
-    var newBarCylData = [];
-    newBarCylData.push(num1cyl,num2cyl)
-    var newBarCylDataSet = {
-      ...old_BarCyl
+    
+    //FUEL COST setting
+    var old_fuelCost = this.state.fuelCostChart.datasets[0];
+    console.log(old_fuelCost)
+    var newFuelCostData = [];
+    newFuelCostData.push(num1fc,num2fc)
+    var newFuelCostDataSet = {
+      ...old_fuelCost
     };
-    newBarCylDataSet.data = newBarCylData;
-    var newState_BarCyl = {
+    newFuelCostDataSet.data = newFuelCostData;
+    var newState_FuelCost = {
+      ...baseDonut,
+      datasets: [newFuelCostDataSet],
+      labels: [
+        mm1 + " | $" + num1fc + " per annum" , 
+        mm2 + " | $" + num2fc + " per annum" 
+      ]
+    };
+    
+    //GREENHOUSE - bar setting
+    var old_greenChart = this.state.greenhouseChart.datasets[0];
+    console.log(old_greenChart)
+    var newGreenChart = [];
+    newGreenChart.push(num1cmpg,num2cmpg)
+    var newGreenChartSet = {
+      ...old_greenChart
+    };
+    newGreenChartSet.data = newGreenChart;
+    var newState_greenChart = {
       ...baseBarChart,
-      datasets: [newBarCylDataSet]
+      datasets: [newGreenChartSet],
+      labels: [
+        mm1 + " | " + num1ghg + " mpg" , 
+        mm2 + " | " + num2ghg + " mpg" 
+      ]
     };
-        
-    //CITY - set new state data
-    // var old_DonutCityMpg = this.state.cityMpgChart.datasets[0];
-    // var new_DonutCityMpgData = [];
-    // new_DonutCityMpgData.push(num1cmpg,num2cmpg)
-    // var new_DonutCityMpgDataSet = {
-    //   ...old_DonutCityMpg
-    // };
-    // new_DonutCityMpgDataSet.data = new_DonutCityMpgData;
-    // var newState_DonutCityMpg = {
-    //   ...dataDoNut,
-    //   datasets: [new_DonutCityMpgDataSet],
-    //   labels: [mm1 + " \n" + num1cmpg, mm2 + " \n" + num2cmpg ]
-    // };
-    
-    //HIGHWAY - set new state data
-    var old_HighwayMpg = this.state.highwayMpgChart.datasets[0];
-
-    //color setting
-    console.log("old_HighwayMpg--------------")
-    console.log(old_HighwayMpg.backgroundColor)
-
-
-    var new_HighwayMpgDonutData = [];
-    new_HighwayMpgDonutData.push(num1hwmpg,num2hwmpg)
-    var new_HigwayMpgDataSet = {
-      ...old_HighwayMpg
-    };
-    new_HigwayMpgDataSet.data = new_HighwayMpgDonutData;
-    var newState_HighwayMpg = {
-      ...dataDoNut,
-      datasets: [new_HigwayMpgDataSet],
-      labels: [mm1 + " \n" + num1hwmpg, mm2 + " \n" + num2hwmpg ]
-    };
-    
     
     this.setState({
       make1: mk1,
@@ -270,9 +265,12 @@ class Dash extends Component {
       class2: vc2,
       train2: vd2,
       trans2: vt2,
-      chart1Data: newState_BarCyl,
+      fuelCostChart: newState_FuelCost,
       cityMpgChart: newState_CityBar,
       highwayMpgChart: newState_HighwayBar,
+      greenhouseChart: newState_greenChart,
+      cylinder_1: num1cyl,
+      cylinder_2: num2cyl,
       selectedValues1: [],
       selectedValues2: []
     
@@ -286,7 +284,7 @@ class Dash extends Component {
           <Row>
             <Col className="text-center">
             <h1 className="display-3">My Dashboard</h1>
-            <p className="h5">Compare vehicles based on input costs and environmental ratings</p>
+            <p className="h5">Compare vehicles based on inputs like fuel costs and environmental ratings</p>
             <hr/>
             </Col>
           </Row>
@@ -352,15 +350,15 @@ class Dash extends Component {
         <br/>
         <Row>
           <Col md="2">
-          <div>
-            row - city
-          </div>
+            <p class="h5">
+            {this.state.model1}
+            </p>
           </Col>
           <Col md="8">
               <Card className="bg-dark">
              <h3>
                 City
-                <small className="text-muted"> Miles per Gallon</small>
+                <small className="text-light"> Miles per Gallon</small>
               </h3>
               <Bar
                 data={this.state.cityMpgChart}
@@ -369,7 +367,7 @@ class Dash extends Component {
                 options={{
                   maintainAspectRatio: true,
                   legend: {
-                    display: true,
+                    display: false,
                     labels: {
                         fontColor: 'rgb(255, 255, 255)'
                     }},
@@ -378,6 +376,11 @@ class Dash extends Component {
                       ticks: {
                         beginAtZero: true
                       }
+                    }],
+                    xAxes: [{
+                      ticks: {
+                        fontColor: 'rgb(255, 255, 255)'
+                      }
                     }]
                   }
                 }}
@@ -385,25 +388,25 @@ class Dash extends Component {
               </Card>
           </Col>
           <Col md="2">
-          <div>
-            test3
-          </div>
+          <p class="h5">
+            {this.state.model2}
+          </p>
           </Col>
         <br/>
         </Row>
         <br/>
         <Row>
           <Col md="2">
-          <div>
-            row - highway_mpg
-          </div>
+          <p class="h5">
+            {this.state.model1}
+          </p>
           </Col>
           <Col md="8">
             <div>
               <Card className="bg-dark">
              <h3>
                 Highway
-                <small className="text-muted"> Miles per Gallon</small>
+                <small className="text-light"> Miles per Gallon</small>
               </h3>
               <Bar
                 data={this.state.highwayMpgChart}
@@ -412,7 +415,7 @@ class Dash extends Component {
                 options={{
                   maintainAspectRatio: true,
                   legend: {
-                    display: true,
+                    display: false,
                     labels: {
                         fontColor: 'rgb(255, 255, 255)'
                     }},
@@ -429,9 +432,9 @@ class Dash extends Component {
             </div>
           </Col>
           <Col md="2">
-          <div>
-            test3
-          </div>
+          <p class="h5">
+            {this.state.model2}
+          </p>
           </Col>
         <br/>
         <br/>
@@ -439,42 +442,101 @@ class Dash extends Component {
         <br/>
         <Row>
           <Col md="2">
-          <div>
-            row last
-            col left
-          </div>
+          <p class="h5">
+            {this.state.model1}
+          </p>
+          </Col>
+          <Col md="8">
+          <Card className="bg-dark">
+              <h3>
+                Fuel Cost
+                <small className="text-light"> per Year</small>
+              </h3>
+              <Doughnut data={this.state.fuelCostChart} legend={this.state.legend}/>
+          </Card>
+          </Col>
+          <Col md="2">
+            <p class="h5">
+              {this.state.model2}
+            </p>
+          </Col>
+        <br/>
+        </Row>
+        <br/>
+        <Row>
+          <Col md="2">
+            <p class="h5">
+              {this.state.model1}
+            </p>
+          </Col>
+          <Col md="8">
+            <div>
+              <Card className="bg-dark">
+             <h3>
+                Greenhouse Gas
+                <small className="text-light"> Score</small>
+              </h3>
+              <Bar
+                data={this.state.highwayMpgChart}
+                width={100}
+                height={50}
+                options={{
+                  maintainAspectRatio: true,
+                  legend: {
+                    display: false,
+                    labels: {
+                        fontColor: 'rgb(255, 255, 255)'
+                    }},
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }}
+              />
+              </Card>
+            </div>
+          </Col>
+          <Col md="2">
+            <p class="h5">
+              {this.state.model2}
+            </p>
+          </Col>
+        </Row>
+        <br/>
+        <Row>
+          <Col md="2">
+            <p class="h5">
+              {this.state.model1}
+            </p>
           </Col>
           <Col md="8">
           <Card className="bg-dark">
               <h3>
                 Cylinders
-                <small className="text-muted"> Comparison</small>
+                <small className="text-light"> Comparison</small>
               </h3>
+              <Row>
+              <div className="col-md-6 text-center" >
               <h1 className="display-1"> {this.state.cylinder_1} </h1>
-            <Bar
-              data={this.state.chart1Data}
-              width={100}
-              height={50}
-              options={{
-                maintainAspectRatio: true,
-                legend: {
-                  display: true,
-                  labels: {
-                      fontColor: 'rgb(255, 255, 255)'
-                  }}
-              }}
-            />
+              </div>
+              <div className="col-md-6 text-center" >
+              <h1 className="display-1"> {this.state.cylinder_2} </h1>
+              </div>
+              </Row>
           </Card>
           </Col>
           <Col md="2">
-          <div>
-            col right
-          </div>
+            <p class="h5">
+              {this.state.model2}
+            </p>
           </Col>
         <br/>
         <br/>
-        <br/>
         </Row>
+        <br/>
       </Container>
     );
   }

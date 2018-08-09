@@ -12,3 +12,7 @@ input {
 .bg-dark {
   color: aqua;
 }
+
+.text-muted {
+  color: aliceblue;
+}
