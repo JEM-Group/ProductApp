@@ -27,7 +27,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getUser()
+    // this.getUser()
+    this.callApi()
   }
 
   updateUser (userObject) {
@@ -55,6 +56,16 @@ class App extends Component {
     })
   }
 
+  callApi = async () => {
+      const response = await fetch('http://localhost:3001/api/dashboard');
+      const body = await response.body;
+
+      if (response.status !== 200) throw Error;
+
+      return body;
+    };
+
+
   render() {
     return (
       <div className="App">
@@ -69,10 +80,10 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               {/*<Route exact path="/signup" component={SignUp} />*/}
               <Route exact path="/research" component={Research} />
-              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/compare" component={Dashboard} />
               <Route exact path="/books/:id" component={Detail} />
               <Route exact path="/chart" component={Chart} />
-              <Route exact path="/dashboard/:id" component={Detail} />
+              <Route exact path="/compare/:id" component={Detail} />
               <Route
                 path="/login"
                 render={() =>

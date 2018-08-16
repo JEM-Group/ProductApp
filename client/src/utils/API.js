@@ -7,7 +7,7 @@ export default {
   //   return axios.get("/api/books");
   // },
   getDash: function() {
-    return axios.get("/api/dashboard");
+    return axios.get("http://localhost:3001/api/dashboard");
   },
 
   getDashID: function(id) {

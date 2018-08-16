@@ -47,7 +47,9 @@ class Research extends Component {
     	results: [],
     	make: "",
     	model: "",
-    	year: "2018"
+    	year: "2018",
+    	prevPageToken: "",
+    	nextPageToken: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,9 +63,12 @@ class Research extends Component {
     let starterQuery = this.buildQueryURL(params)
     API.loadReviews(starterQuery)
       .then(res => {
-        // console.log(res.data.items);
+        console.log(res.data);
+        console.log(nextPageToken);
+        let nextToken = res.data.nextPageToken
         this.setState({
             results: res.data.items
+            nextPageToken: nextToken
         }, function () {
             console.log(this.state.results);
         });
@@ -244,7 +249,10 @@ class Research extends Component {
 				        </div>
 	            </div>
             </Form>
-
+            <div className="query-links">
+              <a className="prev-set-link" onClick="queryPrevSet">Prev</a>
+              <a className="next-set-link" onClick="queryNextSet">Next</a>
+            </div>
             <ResultList results={this.state.results} />
           </Col>
         </Row>

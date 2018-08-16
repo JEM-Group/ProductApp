@@ -4,7 +4,7 @@ const dashboardController = require("../../controllers/dashboardController");
 // Matches with "/api/dashboard"
 router.route("/")
   .get(dashboardController.findAll)
-  .post(dashboardController.create);
+  // .post(dashboardController.create);
 
 // Matches with "/api/dashboard/:id"
 router

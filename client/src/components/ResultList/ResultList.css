@@ -1,3 +1,9 @@
 .list-group-item p {
 	font-size: 1.25rem;
 }
+.prevSetLink {
+	float: left;
+}
+.nextSetLink {
+	float: right;
+}

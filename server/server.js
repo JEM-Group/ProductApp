@@ -10,7 +10,7 @@ const PORT         = process.env.PORT || 3001;
 // const mongoose     = require("mongoose");
 
 // const routes       = require("./routes");
-const user         = require("./routes/user");
+// const user         = require("./routes/user");
 
 // const flash        = require('connect-flash');
 // const cookieParser = require('cookie-parser');
@@ -33,24 +33,24 @@ app.use(
 app.use(bodyParser.json())
 
 // Sessions
-app.use(
-  session({
-    secret: 'fraggle-rock', //pick a random string to make the hash that is generated secure
-    store: new MongoStore({ mongooseConnection: dbConnection }),
-    resave: false, //required
-    saveUninitialized: false //required
-  })
-)
+// app.use(
+//   session({
+//     secret: 'fraggle-rock', //pick a random string to make the hash that is generated secure
+//     store: new MongoStore({ mongooseConnection: dbConnection }),
+//     resave: false, //required
+//     saveUninitialized: false //required
+//   })
+// )
 
-// Passport
-app.use(passport.initialize())
-app.use(passport.session()) // calls the deserializeUser
+// // Passport
+// app.use(passport.initialize())
+// app.use(passport.session()) // calls the deserializeUser
 
 // app.use(cookieParser()); // read cookies (needed for auth)
 
 //Add routes, both API and view
 // app.use(routes);
-app.use('/user', user)
+// app.use('/user', user)
 // app.use('/signup', user)
 
 // Start the API server
