@@ -74,9 +74,11 @@ class Dash extends Component {
 
   loadAuto1 = () => {
     API.getDash()
-      .then(res =>
+      // .then(response => response.data)
+      .then(res => {
+        // return res.data
         this.setState({ auto1: res.data, make: "", model: "", synopsis: "" })
-      )
+      })
       .catch(err => console.log(err));
   };
   loadAuto2 = () => {

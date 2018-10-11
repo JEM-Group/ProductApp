@@ -46,7 +46,7 @@ class Home extends Component {
 	              tag="a"
 	              color="success"
 	              size="large"
-	              href="compare"
+	              href="/compare"
 	              // target="_blank"
 	            >
 	              Compare Cars

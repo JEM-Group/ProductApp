@@ -43,14 +43,14 @@ app.use(
 )
 
 // Passport
-app.use(passport.initialize())
-app.use(passport.session()) // calls the deserializeUser
+// app.use(passport.initialize())
+// app.use(passport.session()) // calls the deserializeUser
 
 // app.use(cookieParser()); // read cookies (needed for auth)
 
 //Add routes, both API and view
 // app.use(routes);
-app.use('/user', user)
+// app.use('/user', user)
 
 // Start the API server
 app.listen(PORT, () => {
